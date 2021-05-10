@@ -1,6 +1,5 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, View } from "react-native";
 
 import {
   useFonts as useOswald,
@@ -29,20 +28,9 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <View style={styles.container}>
-          <DashboardScreen />
-        </View>
+        <DashboardScreen />
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
