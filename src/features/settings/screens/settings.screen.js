@@ -3,10 +3,10 @@ import React from "react";
 import { SafeArea } from "../../../components/utility/safe-area.component";
 import { Text } from "../../../components/typography/text.component";
 
-export const DashboardScreen = () => {
+export const SettingsScreen = () => {
   return (
     <SafeArea>
-      <Text>Hello There</Text>
+      <Text>Settings Screen</Text>
     </SafeArea>
   );
 };

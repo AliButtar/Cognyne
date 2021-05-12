@@ -1,16 +1,14 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
-
 import {
   useFonts as useOswald,
   Oswald_400Regular,
 } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
-
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./src/infrastructure/theme";
 
-import { DashboardScreen } from "./src/features/dashboard/screens/dashboard.screen";
+import { Navigation } from "./src/infrastructure/navigation/index";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -28,7 +26,7 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <DashboardScreen />
+        <Navigation />
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
