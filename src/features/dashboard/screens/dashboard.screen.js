@@ -6,7 +6,7 @@ import { SafeArea } from "../../../components/utility/safe-area.component";
 import { CurrentTasks } from "../components/current-tasks.component";
 import { Popups } from "../components/popups.components";
 
-export const DashboardScreen = () => {
+export const DashboardScreen = ({ navigation }) => {
   const [classExpanded, setClassExpanded] = useState(false);
   const [eventExpanded, setEventExpanded] = useState(false);
   const [busExpanded, setBusExpanded] = useState(false);
@@ -28,7 +28,7 @@ export const DashboardScreen = () => {
           >
             <List.Item
               title="Create Class"
-              onPress={() => null}
+              onPress={() => navigation.navigate("ClassInfoScreen")}
               description="Add Description"
             />
             <List.Item

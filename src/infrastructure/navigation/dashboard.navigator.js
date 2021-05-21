@@ -6,13 +6,13 @@ import {
 } from "@react-navigation/stack";
 
 import { DashboardScreen } from "../../features/dashboard/screens/dashboard.screen";
+import { ClassInfoScreen } from "../../features/class/screens/class-info.screen";
 
 const DashboardStack = createStackNavigator();
 
 export const DashboardNavigator = () => {
   return (
     <DashboardStack.Navigator
-      headerMode="none"
       screenOptions={
         Platform.OS === "ios"
           ? { ...TransitionPresets.ModalPresentationIOS }
@@ -20,7 +20,20 @@ export const DashboardNavigator = () => {
       }
       mode="modal"
     >
-      <DashboardStack.Screen name="Dashboard" component={DashboardScreen} />
+      <DashboardStack.Screen
+        options={{
+          header: () => null,
+        }}
+        name="Dashboard"
+        component={DashboardScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "Enter Class Info",
+        }}
+        name="ClassInfoScreen"
+        component={ClassInfoScreen}
+      />
     </DashboardStack.Navigator>
   );
 };
