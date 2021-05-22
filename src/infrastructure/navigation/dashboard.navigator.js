@@ -7,6 +7,7 @@ import {
 
 import { DashboardScreen } from "../../features/dashboard/screens/dashboard.screen";
 import { ClassInfoScreen } from "../../features/class/screens/class-info.screen";
+import { ClassCameraScreen } from "../../features/class/screens/camera-class.screen";
 
 const DashboardStack = createStackNavigator();
 
@@ -24,7 +25,7 @@ export const DashboardNavigator = () => {
         options={{
           header: () => null,
         }}
-        name="Dashboard"
+        name="DashboardScreen"
         component={DashboardScreen}
       />
       <DashboardStack.Screen
@@ -33,6 +34,13 @@ export const DashboardNavigator = () => {
         }}
         name="ClassInfoScreen"
         component={ClassInfoScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "Verify Face",
+        }}
+        name="ClassCameraScreen"
+        component={ClassCameraScreen}
       />
     </DashboardStack.Navigator>
   );

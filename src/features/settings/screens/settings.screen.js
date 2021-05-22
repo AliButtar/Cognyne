@@ -20,7 +20,7 @@ const AvatarContainer = styled.View`
 `;
 
 export const SettingsScreen = ({ navigation }) => {
-  const { onLogout, user } = useContext(AuthenticationContext);
+  const { onLogout, user, data } = useContext(AuthenticationContext);
   const [photo, setPhoto] = useState(null);
 
   const getProfilePicture = async (currentUser) => {
@@ -49,6 +49,12 @@ export const SettingsScreen = ({ navigation }) => {
             />
           )}
         </TouchableOpacity>
+        <Spacer position="top" size="large">
+          <Text variant="label">{data.fullName}</Text>
+        </Spacer>
+        <Spacer position="top" size="large">
+          <Text variant="label">{data.regNo}</Text>
+        </Spacer>
         <Spacer position="top" size="large">
           <Text variant="label">{user.email}</Text>
         </Spacer>

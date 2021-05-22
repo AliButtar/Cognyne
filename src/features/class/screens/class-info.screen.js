@@ -1,47 +1,15 @@
 import React, { useState } from "react";
-import styled from "styled-components/native";
-import { TextInput, Button } from "react-native-paper";
 
-import { colors } from "../../../infrastructure/theme/colors";
+import {
+  GenerateButton,
+  CreateClassButton,
+  ClassNameInput,
+  CodeInput,
+  ClassView,
+  TwoElementsRow,
+} from "../components/class-info.styles";
 
-const GenerateButton = styled(Button).attrs({
-  color: colors.brand.primary,
-})`
-  padding: ${(props) => props.theme.space[2]};
-  margin-left: ${(props) => props.theme.space[2]};
-  height: 77%;
-  width: 40%;
-`;
-
-const CreateClassButton = styled(Button).attrs({
-  color: colors.brand.primary,
-})`
-  padding: ${(props) => props.theme.space[2]};
-  margin-left: ${(props) => props.theme.space[3]};
-  margin-right: ${(props) => props.theme.space[3]};
-`;
-
-const ClassNameInput = styled(TextInput)`
-  width: 90%;
-  margin: ${(props) => props.theme.space[3]};
-`;
-
-const CodeInput = styled(TextInput)`
-  width: 50%;
-  margin-left: ${(props) => props.theme.space[3]};
-  margin-bottom: ${(props) => props.theme.space[3]};
-`;
-
-const ClassView = styled.View`
-  flex: 1;
-  justify-content: center;
-`;
-
-const TwoElementsRow = styled.View`
-  flex-direction: row;
-`;
-
-export const ClassInfoScreen = () => {
+export const ClassInfoScreen = ({ navigation }) => {
   const [className, setClassName] = useState("");
   const [code, setCode] = useState("");
 
@@ -67,7 +35,7 @@ export const ClassInfoScreen = () => {
       </TwoElementsRow>
       <CreateClassButton
         mode="contained"
-        onPress={() => console.log(className)}
+        onPress={() => navigation.navigate("ClassCameraScreen")}
       >
         Create Class
       </CreateClassButton>

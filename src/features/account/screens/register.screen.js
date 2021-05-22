@@ -17,6 +17,8 @@ import { AuthenticationContext } from "../../../services/authentication/authenti
 
 export const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [regNo, setRegNo] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
   const { onRegister, isLoading, error } = useContext(AuthenticationContext);
@@ -26,14 +28,33 @@ export const RegisterScreen = ({ navigation }) => {
       <AccountCover />
       <Title>Cognyne</Title>
       <AccountContainer>
-        <AuthInput
-          label="E-mail"
-          value={email}
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          onChangeText={(u) => setEmail(u)}
-        />
+        <Spacer size="large">
+          <AuthInput
+            label="Full Name"
+            value={fullName}
+            onChangeText={(name) => setFullName(name)}
+          />
+        </Spacer>
+
+        <Spacer size="large">
+          <AuthInput
+            label="Registration Number"
+            value={regNo}
+            onChangeText={(regNum) => setRegNo(regNum)}
+          />
+        </Spacer>
+
+        <Spacer size="large">
+          <AuthInput
+            label="E-mail"
+            value={email}
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            onChangeText={(u) => setEmail(u)}
+          />
+        </Spacer>
+
         <Spacer size="large">
           <AuthInput
             label="Password"
@@ -60,17 +81,26 @@ export const RegisterScreen = ({ navigation }) => {
           </ErrorContainer>
         )}
         <Spacer size="large">
-          {!isLoading ? (
-            <AuthButton
-              icon="email"
-              mode="contained"
-              onPress={() => onRegister(email, password, repeatedPassword)}
-            >
-              Register
-            </AuthButton>
-          ) : (
-            <ActivityIndicator animating={true} color={Colors.blue300} />
-          )}
+          <Spacer size="large">
+            {!isLoading ? (
+              <AuthButton
+                icon="email"
+                mode="contained"
+                onPress={() => {
+                  const data = {
+                    fullName: fullName,
+                    regNo: regNo,
+                    email: email,
+                  };
+                  onRegister(email, password, repeatedPassword, data);
+                }}
+              >
+                Register
+              </AuthButton>
+            ) : (
+              <ActivityIndicator animating={true} color={Colors.blue300} />
+            )}
+          </Spacer>
         </Spacer>
       </AccountContainer>
       <Spacer size="large">

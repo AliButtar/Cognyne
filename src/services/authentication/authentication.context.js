@@ -9,6 +9,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
 
   firebase.auth().onAuthStateChanged((usr) => {
     if (usr) {
@@ -23,6 +24,22 @@ export const AuthenticationContextProvider = ({ children }) => {
     setIsLoading(true);
     loginRequest(email, password)
       .then((u) => {
+        const usersRef = firebase.firestore().collection("users");
+        usersRef
+          .doc(u.user.uid)
+          .get()
+          .then((firestoreDocument) => {
+            if (!firestoreDocument.exists) {
+              setError("User does not exist anymore.");
+              return;
+            }
+            setData(firestoreDocument.data());
+            console.log(firestoreDocument.data());
+          })
+          .catch((eerr) => {
+            setIsLoading(false);
+            setError(eerr.toString());
+          });
         setUser(u);
         setIsLoading(false);
       })
@@ -32,7 +49,7 @@ export const AuthenticationContextProvider = ({ children }) => {
       });
   };
 
-  const onRegister = (email, password, repeatedPassword) => {
+  const onRegister = (email, password, repeatedPassword, userData) => {
     setIsLoading(true);
     if (password !== repeatedPassword) {
       setError("Error: Passwords do not match");
@@ -42,8 +59,18 @@ export const AuthenticationContextProvider = ({ children }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((u) => {
-        setUser(u);
+        setData({ id: u.user.uid, ...userData });
+        console.log(data);
+        const usersRef = firebase.firestore().collection("users");
+        usersRef
+          .doc(u.user.uid)
+          .set({ id: u.user.uid, ...userData })
+          .catch((ee) => {
+            setIsLoading(false);
+            setError(ee.toString());
+          });
         setIsLoading(false);
+        setUser(u);
       })
       .catch((e) => {
         setIsLoading(false);
@@ -58,6 +85,7 @@ export const AuthenticationContextProvider = ({ children }) => {
       .then(() => {
         setUser(null);
         setError(null);
+        setData(null);
       });
   };
 
@@ -68,6 +96,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         user,
         isLoading,
         error,
+        data,
         onLogin,
         onRegister,
         onLogout,
