@@ -13,6 +13,7 @@ import { IconButton } from "react-native-paper";
 import { colors } from "../../../infrastructure/theme/colors";
 
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
+import { ClassContext } from "../../../services/classes/classes.context";
 
 const ProfileCamera = styled(Camera)`
   height: 100%;
@@ -33,11 +34,16 @@ const VerifyButton = styled(Button).attrs({
   margin-bottom: ${(props) => props.theme.space[4]};
 `;
 
-export const ClassCameraScreen = ({ navigation }) => {
+export const ClassCameraScreen = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const cameraRef = useRef();
+
   const { user } = useContext(AuthenticationContext);
+  const { onClassCreate, error } = useContext(ClassContext);
+
   const [type, setType] = useState(Camera.Constants.Type.back);
+
+  const { className, code } = route.params;
 
   const snap = async () => {
     if (cameraRef) {
@@ -60,7 +66,6 @@ export const ClassCameraScreen = ({ navigation }) => {
       //     alert(error);
       //     });
       //   }
-
       navigation.navigate("DashboardScreen");
     }
   };
@@ -93,6 +98,7 @@ export const ClassCameraScreen = ({ navigation }) => {
         />
         <VerifyButton
           onPress={() => {
+            onClassCreate(className, code);
             snap();
           }}
         >

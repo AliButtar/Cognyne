@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import * as firebase from "firebase";
 
 import { loginRequest } from "./authentication.service";
@@ -9,7 +9,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
 
   firebase.auth().onAuthStateChanged((usr) => {
     if (usr) {
@@ -34,7 +34,6 @@ export const AuthenticationContextProvider = ({ children }) => {
               return;
             }
             setData(firestoreDocument.data());
-            console.log(firestoreDocument.data());
           })
           .catch((eerr) => {
             setIsLoading(false);
@@ -60,7 +59,6 @@ export const AuthenticationContextProvider = ({ children }) => {
       .createUserWithEmailAndPassword(email, password)
       .then((u) => {
         setData({ id: u.user.uid, ...userData });
-        console.log(data);
         const usersRef = firebase.firestore().collection("users");
         usersRef
           .doc(u.user.uid)
@@ -85,9 +83,34 @@ export const AuthenticationContextProvider = ({ children }) => {
       .then(() => {
         setUser(null);
         setError(null);
-        setData(null);
+        setData({});
       });
   };
+
+  const readUser = (signedInUser) => {
+    const userRef = firebase.firestore().collection("users");
+    userRef
+      .doc(signedInUser.uid)
+      .get()
+      .then((firestoreDocument) => {
+        if (!firestoreDocument.exists) {
+          setError("User does not exist anymore.");
+          return;
+        }
+        setData(firestoreDocument.data());
+      })
+      .catch((eerr) => {
+        setIsLoading(false);
+        setError(eerr.toString());
+      });
+  };
+
+  useEffect(() => {
+    if (firebase.auth().currentUser) {
+      readUser(firebase.auth().currentUser);
+      console.log("One Read got Called");
+    }
+  }, [user]);
 
   return (
     <AuthenticationContext.Provider

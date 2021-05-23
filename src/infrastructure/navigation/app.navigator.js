@@ -8,6 +8,8 @@ import { CounsellorScreen } from "../../features/counsellor/screens/counsellor.s
 import { DashboardNavigator } from "./dashboard.navigator";
 import { SettingsNavigator } from "./settings.navigator";
 
+import { ClassContextProvider } from "../../services/classes/classes.context";
+
 const Tab = createBottomTabNavigator();
 
 const TAB_ICON = {
@@ -44,17 +46,19 @@ const createScreenOptions = ({ route }) => {
 
 export const AppNavigator = () => {
   return (
-    <Tab.Navigator
-      screenOptions={createScreenOptions}
-      tabBarOptions={{
-        activeTintColor: "blue",
-        inactiveTintColor: "gray",
-      }}
-    >
-      <Tab.Screen name="Dashboard" component={DashboardNavigator} />
-      <Tab.Screen name="Maps" component={MapsScreen} />
-      <Tab.Screen name="Counsellor" component={CounsellorScreen} />
-      <Tab.Screen name="Settings" component={SettingsNavigator} />
-    </Tab.Navigator>
+    <ClassContextProvider>
+      <Tab.Navigator
+        screenOptions={createScreenOptions}
+        tabBarOptions={{
+          activeTintColor: "blue",
+          inactiveTintColor: "gray",
+        }}
+      >
+        <Tab.Screen name="Dashboard" component={DashboardNavigator} />
+        <Tab.Screen name="Maps" component={MapsScreen} />
+        <Tab.Screen name="Counsellor" component={CounsellorScreen} />
+        <Tab.Screen name="Settings" component={SettingsNavigator} />
+      </Tab.Navigator>
+    </ClassContextProvider>
   );
 };

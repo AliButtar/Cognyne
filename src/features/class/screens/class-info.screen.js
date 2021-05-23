@@ -35,7 +35,9 @@ export const ClassInfoScreen = ({ navigation }) => {
       </TwoElementsRow>
       <CreateClassButton
         mode="contained"
-        onPress={() => navigation.navigate("ClassCameraScreen")}
+        onPress={() =>
+          navigation.navigate("ClassCameraScreen", { className, code })
+        }
       >
         Create Class
       </CreateClassButton>
