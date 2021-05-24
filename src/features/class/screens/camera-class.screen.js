@@ -99,7 +99,8 @@ export const ClassCameraScreen = ({ navigation, route }) => {
         <VerifyButton
           onPress={() => {
             onClassCreate(className, code);
-            snap();
+            // snap();
+            navigation.navigate("DashboardScreen");
           }}
         >
           Verify

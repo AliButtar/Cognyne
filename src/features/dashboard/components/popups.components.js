@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Platform } from "react-native";
 import styled from "styled-components/native";
 import Modal from "react-native-modal";
@@ -6,6 +6,8 @@ import { TextInput, Button } from "react-native-paper";
 
 import { colors } from "../../../infrastructure/theme/colors";
 import { Spacer } from "../../../components/spacer/spacer.component";
+
+import { ClassContext } from "../../../services/classes/classes.context";
 
 const Popup = styled(Modal).attrs({
   backdropOpacity: Platform.OS === "android" ? 0.5 : 0.7,
@@ -31,6 +33,8 @@ const SubmitButton = styled(Button).attrs({
 export const Popups = ({ modalVisible, setModalVisible, type }) => {
   const [code, setCode] = useState("");
 
+  const { joinClass } = useContext(ClassContext);
+
   return (
     <ModalView>
       <Popup
@@ -46,7 +50,13 @@ export const Popups = ({ modalVisible, setModalVisible, type }) => {
           onChangeText={(text) => setCode(text)}
         />
         <Spacer size="large">
-          <SubmitButton mode="contained" onPress={() => null}>
+          <SubmitButton
+            mode="contained"
+            onPress={() => {
+              joinClass(code);
+              setModalVisible(!modalVisible);
+            }}
+          >
             Submit
           </SubmitButton>
         </Spacer>
