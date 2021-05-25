@@ -34,13 +34,16 @@ const ActiveTasksList = styled(FlatList).attrs({
   flex: 1;
 `;
 
-export const CurrentTasks = () => {
+export const CurrentTasks = ({ navigation }) => {
   const { user } = useContext(AuthenticationContext);
   const {
     classData,
     studentData,
     getActiveTasksClassesCreated,
     getActiveTasksClassesJoined,
+    getStudentsInClass,
+    leaveClass,
+    getVerifiedStatus,
   } = useContext(ClassContext);
 
   useEffect(() => {
@@ -60,7 +63,7 @@ export const CurrentTasks = () => {
   // const { stdClassName } = studentData;
   // const { className } = classData;
   const totalData = [classData, studentData];
-  console.log(totalData);
+  // console.log(totalData);
   return (
     <CurrentTasksSection>
       {isEmpty(classData) && isEmpty(studentData) ? (
@@ -72,7 +75,13 @@ export const CurrentTasks = () => {
             if (!isEmpty(item)) {
               return (
                 <Spacer position="bottom" size="large">
-                  <ActiveTasksInfoCard data={item} />
+                  <ActiveTasksInfoCard
+                    data={item}
+                    getStudentsInClass={getStudentsInClass}
+                    leaveClass={leaveClass}
+                    navigation={navigation}
+                    getVerifiedStatus={getVerifiedStatus}
+                  />
                 </Spacer>
               );
             } else {

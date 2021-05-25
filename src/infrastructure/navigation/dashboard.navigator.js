@@ -8,6 +8,7 @@ import {
 import { DashboardScreen } from "../../features/dashboard/screens/dashboard.screen";
 import { ClassInfoScreen } from "../../features/class/screens/class-info.screen";
 import { ClassCameraScreen } from "../../features/class/screens/camera-class.screen";
+import { ClassJoinedCameraScreen } from "../../features/dashboard/screens/camera-class-join.screen";
 
 const DashboardStack = createStackNavigator();
 
@@ -41,6 +42,13 @@ export const DashboardNavigator = () => {
         }}
         name="ClassCameraScreen"
         component={ClassCameraScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "Verify Face",
+        }}
+        name="ClassJoinedCameraScreen"
+        component={ClassJoinedCameraScreen}
       />
     </DashboardStack.Navigator>
   );

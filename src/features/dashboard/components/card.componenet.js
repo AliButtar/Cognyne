@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, FlatList } from "react-native";
+import { Button } from "react-native-paper";
 
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { Text } from "../../../components/typography/text.component";
@@ -11,9 +12,20 @@ import {
   Section,
   Container,
   Icon,
+  LeaveButton,
+  VerifyButton,
 } from "./card.component.styles";
 
-export const ActiveTasksInfoCard = ({ data = {} }) => {
+export const ActiveTasksInfoCard = ({
+  data = {},
+  getStudentsInClass,
+  leaveClass,
+  navigation,
+  getVerifiedStatus,
+}) => {
+  const [noOfStudents, setNoOfStudents] = useState(0);
+  const [verifiedStatus, setVerifiedStatus] = useState(false);
+
   const {
     className,
     classCode,
@@ -24,41 +36,85 @@ export const ActiveTasksInfoCard = ({ data = {} }) => {
     regNo,
     stdClassName,
     stdClassCode,
+    stdClassMaker,
     verified,
   } = data;
 
-  console.log(data);
+  // console.log(data);
+
+  useEffect(() => {
+    if (className) {
+      getStudentsInClass(classCode, setNoOfStudents);
+    }
+  }, [noOfStudents]);
+
+  useEffect(() => {
+    if (stdClassName) {
+      getVerifiedStatus(stdClassCode, setVerifiedStatus);
+    }
+  }, [verifiedStatus]);
 
   return (
     <>
       <ActiveTaskCard>
         {className && (
           <>
-            <Text variant="label">{"Created Class:"}</Text>
+            <Info>
+              <Text variant="body">{"Created Class:"}</Text>
+            </Info>
             <Section>
-              <Container>
-                <Text variant="body">{"Class Name:     "}</Text>
-                <Text variant="caption">{className}</Text>
-              </Container>
-              <Container>
-                <Text variant="body">{"Class Code:     "}</Text>
-                <Text variant="caption">{classCode}</Text>
-              </Container>
-              <Container>
-                <Text variant="body">{"Class Maker:     "}</Text>
-                <Text variant="caption">{classMaker}</Text>
-              </Container>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Class Name: " + className}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Class Code: " + classCode}</Text>
+              </Spacer>
+              <Text variant="label">
+                {"Number of Students: " + noOfStudents}
+              </Text>
+              <Spacer position="bottom" size="medium" />
             </Section>
           </>
         )}
         {stdClassName && (
           <>
-            <Text variant="label">{"Joined Class:"}</Text>
+            <Info>
+              <Text variant="body">{"Joined Class:"}</Text>
+            </Info>
             <Section>
-              <Text variant="body">{"Class Name: " + stdClassName}</Text>
-              <Text variant="body">{"Class Code: " + stdClassCode}</Text>
-              <Text variant="body">{"Your Registration number: " + regNo}</Text>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Class Name: " + stdClassName}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Class Code: " + stdClassCode}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Class Maker: " + stdClassMaker}</Text>
+              </Spacer>
+              <Text variant="label">
+                Verified: {verifiedStatus ? "Yes" : "No"}
+              </Text>
+              <Spacer position="bottom" size="medium" />
             </Section>
+
+            <VerifyButton
+              icon="face-recognition"
+              mode="contained"
+              onPress={() =>
+                navigation.navigate("ClassJoinedCameraScreen", { stdClassCode })
+              }
+            >
+              Verify
+            </VerifyButton>
+            <LeaveButton
+              icon="account-arrow-left-outline"
+              mode="contained"
+              onPress={() => {
+                leaveClass(stdClassCode);
+              }}
+            >
+              Leave
+            </LeaveButton>
           </>
         )}
       </ActiveTaskCard>

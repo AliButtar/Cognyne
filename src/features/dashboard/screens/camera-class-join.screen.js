@@ -34,16 +34,16 @@ const VerifyButton = styled(Button).attrs({
   margin-bottom: ${(props) => props.theme.space[4]};
 `;
 
-export const ClassCameraScreen = ({ navigation, route }) => {
+export const ClassJoinedCameraScreen = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const cameraRef = useRef();
 
   const { user } = useContext(AuthenticationContext);
-  const { onClassCreate, error } = useContext(ClassContext);
+  const { updateVerifiedStatus, error } = useContext(ClassContext);
 
   const [type, setType] = useState(Camera.Constants.Type.back);
 
-  const { className, code } = route.params;
+  const { stdClassCode } = route.params;
 
   const snap = async () => {
     if (cameraRef) {
@@ -86,8 +86,9 @@ export const ClassCameraScreen = ({ navigation, route }) => {
         />
         <VerifyButton
           onPress={() => {
-            onClassCreate(className, code);
-
+            if (true) {
+              updateVerifiedStatus(stdClassCode);
+            }
             navigation.navigate("DashboardScreen");
           }}
         >

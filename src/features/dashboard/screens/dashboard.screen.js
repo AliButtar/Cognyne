@@ -17,7 +17,7 @@ export const DashboardScreen = ({ navigation }) => {
 
   return (
     <SafeArea>
-      <CurrentTasks />
+      <CurrentTasks navigation={navigation} />
       <ScrollView>
         <List.Section>
           <List.Accordion

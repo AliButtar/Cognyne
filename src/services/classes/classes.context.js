@@ -1,5 +1,6 @@
 import React, { useState, createContext, useContext } from "react";
 import * as firebase from "firebase";
+import { onSnapshot } from "firebase/firestore";
 
 import { AuthenticationContext } from "../authentication/authentication.context";
 
@@ -26,6 +27,7 @@ export const ClassContextProvider = ({ children }) => {
       classCode: classCode,
       classMaker: data.fullName,
       classMakerUID: user.uid,
+      totalStudents: 0,
     };
 
     setClassData(classDataLocal);
@@ -71,6 +73,9 @@ export const ClassContextProvider = ({ children }) => {
     classRef.get().then((document) => {
       const joinedClass = document.data();
 
+      classRef.update({
+        totalStudents: joinedClass.totalStudents + 1,
+      });
       const studentDataLocal = {
         id: user.uid,
         name: data.fullName,
@@ -78,6 +83,7 @@ export const ClassContextProvider = ({ children }) => {
         stdClassName: joinedClass.className,
         stdClassCode: joinedClass.classCode,
         verified: false,
+        stdClassMaker: joinedClass.classMaker,
       };
 
       setStudentData(studentDataLocal);
@@ -95,6 +101,71 @@ export const ClassContextProvider = ({ children }) => {
     });
   };
 
+  const leaveClass = (classCode) => {
+    const classRef = firebase
+      .firestore()
+      .collection("ActiveTasks-Joined")
+      .doc(user.uid)
+      .collection("Class");
+
+    classRef.doc(classCode).delete();
+
+    const classRef2 = firebase.firestore().collection("Classes").doc(classCode);
+
+    classRef2.get().then((document) => {
+      const joinedClass = document.data();
+      classRef2.update({
+        totalStudents: joinedClass.totalStudents - 1,
+      });
+
+      classRef2
+        .collection("Students")
+        .doc(user.uid)
+        .delete()
+        .then(() => console.log("deleted"));
+    });
+    setStudentData({});
+  };
+
+  const getStudentsInClass = (classCode, setNoOfStudents) => {
+    firebase
+      .firestore()
+      .collection("Classes")
+      .doc(classCode)
+      .onSnapshot((doc) => {
+        setNoOfStudents(doc.data().totalStudents.toString());
+      });
+  };
+
+  const updateVerifiedStatus = (classCode) => {
+    const classRef = firebase
+      .firestore()
+      .collection("Classes")
+      .doc(classCode)
+      .collection("Students")
+      .doc(user.uid);
+
+    classRef.get().then((document) => {
+      classRef.update({
+        verified: true,
+      });
+    });
+  };
+
+  const getVerifiedStatus = (classCode, setVerifiedStatus) => {
+    firebase
+      .firestore()
+      .collection("Classes")
+      .doc(classCode)
+      .collection("Students")
+      .doc(user.uid)
+      .onSnapshot((doc) => {
+        if (doc.data()) {
+          setVerifiedStatus(doc.data().verified);
+        }
+      });
+  };
+
   return (
     <ClassContext.Provider
       value={{
@@ -102,6 +173,10 @@ export const ClassContextProvider = ({ children }) => {
         joinClass,
         getActiveTasksClassesCreated,
         getActiveTasksClassesJoined,
+        getStudentsInClass,
+        leaveClass,
+        updateVerifiedStatus,
+        getVerifiedStatus,
         classData,
         studentData,
         error,

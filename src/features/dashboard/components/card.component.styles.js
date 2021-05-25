@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { Card } from "react-native-paper";
+import { Card, Button } from "react-native-paper";
 
 export const Icon = styled.Image`
   width: 15px;
@@ -22,7 +22,9 @@ export const CardInfo = styled.Text`
 `;
 
 export const Info = styled.View`
-  padding: ${(props) => props.theme.space[3]};
+  padding-left: ${(props) => props.theme.space[1]};
+  padding-top: ${(props) => props.theme.space[1]};
+  padding-bottom: ${(props) => props.theme.space[1]};
 `;
 
 export const Section = styled.View`
@@ -32,4 +34,17 @@ export const Section = styled.View`
 
 export const Container = styled.View`
   flex-direction: row;
+`;
+
+export const LeaveButton = styled(Button)`
+  position: absolute;
+  top: 25px;
+  right: 5px;
+  padding-right: 6px;
+`;
+
+export const VerifyButton = styled(Button)`
+  position: absolute;
+  bottom: 25px;
+  right: 5px;
 `;

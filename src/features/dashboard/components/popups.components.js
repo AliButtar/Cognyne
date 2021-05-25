@@ -55,6 +55,7 @@ export const Popups = ({ modalVisible, setModalVisible, type }) => {
             onPress={() => {
               joinClass(code);
               setModalVisible(!modalVisible);
+              setCode("");
             }}
           >
             Submit

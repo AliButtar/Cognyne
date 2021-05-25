@@ -47,7 +47,11 @@ export const CameraScreen = ({ navigation }) => {
   }
   return (
     <View>
-      <ProfileCamera ref={(camera) => (cameraRef.current = camera)} type={type}>
+      <ProfileCamera
+        ref={(camera) => (cameraRef.current = camera)}
+        type={type}
+        ratio={"16:9"}
+      >
         <View>
           <TouchableOpacity
             onPress={() => {
