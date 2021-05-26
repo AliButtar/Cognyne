@@ -9,6 +9,7 @@ import { DashboardScreen } from "../../features/dashboard/screens/dashboard.scre
 import { ClassInfoScreen } from "../../features/class/screens/class-info.screen";
 import { ClassCameraScreen } from "../../features/class/screens/camera-class.screen";
 import { ClassJoinedCameraScreen } from "../../features/dashboard/screens/camera-class-join.screen";
+import { ClassDetailsScreen } from "../../features/class/screens/class-details.screen";
 
 const DashboardStack = createStackNavigator();
 
@@ -49,6 +50,13 @@ export const DashboardNavigator = () => {
         }}
         name="ClassJoinedCameraScreen"
         component={ClassJoinedCameraScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          header: () => null,
+        }}
+        name="ClassDetailsScreen"
+        component={ClassDetailsScreen}
       />
     </DashboardStack.Navigator>
   );

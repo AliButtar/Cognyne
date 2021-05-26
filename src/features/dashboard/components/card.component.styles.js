@@ -38,13 +38,6 @@ export const Container = styled.View`
 
 export const LeaveButton = styled(Button)`
   position: absolute;
-  top: 25px;
-  right: 5px;
-  padding-right: 6px;
-`;
-
-export const VerifyButton = styled(Button)`
-  position: absolute;
-  bottom: 25px;
+  top: 5px;
   right: 5px;
 `;

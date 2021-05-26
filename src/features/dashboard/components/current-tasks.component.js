@@ -14,7 +14,7 @@ const CurrentTasksSection = styled.View`
   margin-top: 20px;
   margin-left: 20px;
   width: 90%;
-  height: 40%;
+  height: 50%;
   border-radius: 15px;
 
   box-shadow: 10px 5px 5px black;
@@ -44,6 +44,7 @@ export const CurrentTasks = ({ navigation }) => {
     getStudentsInClass,
     leaveClass,
     getVerifiedStatus,
+    noOfStudents,
   } = useContext(ClassContext);
 
   useEffect(() => {
@@ -81,6 +82,7 @@ export const CurrentTasks = ({ navigation }) => {
                     leaveClass={leaveClass}
                     navigation={navigation}
                     getVerifiedStatus={getVerifiedStatus}
+                    noOfStudents={noOfStudents}
                   />
                 </Spacer>
               );
@@ -88,7 +90,14 @@ export const CurrentTasks = ({ navigation }) => {
               return;
             }
           }}
-          keyExtractor={(item) => item.className}
+          keyExtractor={(item, index) => {
+            return "item" + index;
+            // if (!isEmpty(classData)) {
+            //   return item.classCode;
+            // } else if (!isEmpty(studentData)) {
+            //   return item.id;
+            // }
+          }}
         />
       )}
     </CurrentTasksSection>

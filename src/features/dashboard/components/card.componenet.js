@@ -14,6 +14,7 @@ import {
   Icon,
   LeaveButton,
   VerifyButton,
+  DetailsButton,
 } from "./card.component.styles";
 
 export const ActiveTasksInfoCard = ({
@@ -22,8 +23,8 @@ export const ActiveTasksInfoCard = ({
   leaveClass,
   navigation,
   getVerifiedStatus,
+  noOfStudents,
 }) => {
-  const [noOfStudents, setNoOfStudents] = useState(0);
   const [verifiedStatus, setVerifiedStatus] = useState(false);
 
   const {
@@ -44,7 +45,7 @@ export const ActiveTasksInfoCard = ({
 
   useEffect(() => {
     if (className) {
-      getStudentsInClass(classCode, setNoOfStudents);
+      getStudentsInClass(classCode);
     }
   }, [noOfStudents]);
 
@@ -74,6 +75,19 @@ export const ActiveTasksInfoCard = ({
               </Text>
               <Spacer position="bottom" size="medium" />
             </Section>
+            <Button
+              icon="account-arrow-left-outline"
+              mode="contained"
+              onPress={() => {
+                navigation.navigate("ClassDetailsScreen", {
+                  classCode,
+                  noOfStudents,
+                  verifiedStatus,
+                });
+              }}
+            >
+              Details
+            </Button>
           </>
         )}
         {stdClassName && (
@@ -97,15 +111,6 @@ export const ActiveTasksInfoCard = ({
               <Spacer position="bottom" size="medium" />
             </Section>
 
-            <VerifyButton
-              icon="face-recognition"
-              mode="contained"
-              onPress={() =>
-                navigation.navigate("ClassJoinedCameraScreen", { stdClassCode })
-              }
-            >
-              Verify
-            </VerifyButton>
             <LeaveButton
               icon="account-arrow-left-outline"
               mode="contained"
@@ -115,6 +120,16 @@ export const ActiveTasksInfoCard = ({
             >
               Leave
             </LeaveButton>
+
+            <Button
+              icon="face-recognition"
+              mode="contained"
+              onPress={() =>
+                navigation.navigate("ClassJoinedCameraScreen", { stdClassCode })
+              }
+            >
+              Verify
+            </Button>
           </>
         )}
       </ActiveTaskCard>

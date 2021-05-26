@@ -9,6 +9,9 @@ export const ClassContext = createContext();
 export const ClassContextProvider = ({ children }) => {
   const { user, data } = useContext(AuthenticationContext);
 
+  const [studentsDetails, setStudentsDetails] = useState([]);
+
+  const [noOfStudents, setNoOfStudents] = useState(0);
   const [classData, setClassData] = useState({});
   const [studentData, setStudentData] = useState({});
   const [error, setError] = useState(null);
@@ -127,7 +130,7 @@ export const ClassContextProvider = ({ children }) => {
     setStudentData({});
   };
 
-  const getStudentsInClass = (classCode, setNoOfStudents) => {
+  const getStudentsInClass = (classCode) => {
     firebase
       .firestore()
       .collection("Classes")
@@ -166,6 +169,34 @@ export const ClassContextProvider = ({ children }) => {
       });
   };
 
+  const getStudentsDetails = async (classCode) => {
+    const firestoreDocs = [];
+    const classRef = await firebase
+      .firestore()
+      .collection("Classes")
+      .doc(classCode)
+      .collection("Students");
+
+    await classRef.get().then(async (coll) => {
+      await coll.forEach((doc) => {
+        firestoreDocs.push(doc.data());
+      });
+      setStudentsDetails(firestoreDocs);
+    });
+    // const operation = (list1, list2, isUnion = false) =>
+    //   list1.filter(
+    //     (
+    //       (set) => (a) =>
+    //         isUnion === set.has(a.id)
+    //     )(new Set(list2.map((b) => b.id)))
+    //   );
+
+    // // Following functions are to be used:
+    // const inBoth = (list1, list2) => operation(list1, list2, true);
+
+    // // setStudentsDetails([]);
+  };
+
   return (
     <ClassContext.Provider
       value={{
@@ -177,8 +208,11 @@ export const ClassContextProvider = ({ children }) => {
         leaveClass,
         updateVerifiedStatus,
         getVerifiedStatus,
+        getStudentsDetails,
+        noOfStudents,
         classData,
         studentData,
+        studentsDetails,
         error,
       }}
     >
