@@ -11,6 +11,7 @@ export const ClassContextProvider = ({ children }) => {
 
   const [studentsDetails, setStudentsDetails] = useState([]);
 
+  const [verifiedStatus, setVerifiedStatus] = useState(false);
   const [noOfStudents, setNoOfStudents] = useState(0);
   const [classData, setClassData] = useState({});
   const [studentData, setStudentData] = useState({});
@@ -140,28 +141,54 @@ export const ClassContextProvider = ({ children }) => {
       });
   };
 
-  const updateVerifiedStatus = (classCode) => {
+  const updateVerifiedStatus = (classCode, uid) => {
     const classRef = firebase
       .firestore()
       .collection("Classes")
       .doc(classCode)
       .collection("Students")
-      .doc(user.uid);
+      .doc(uid);
 
-    classRef.get().then((document) => {
+    classRef.get().then((doc) => {
       classRef.update({
         verified: true,
       });
+      setVerifiedStatus(doc.data().verified);
     });
   };
 
-  const getVerifiedStatus = (classCode, setVerifiedStatus) => {
+  const updateVerifiedStatusTeacherStudent = (
+    classCode,
+    uid,
+    currentVerify
+  ) => {
+    const classRef = firebase
+      .firestore()
+      .collection("Classes")
+      .doc(classCode)
+      .collection("Students")
+      .doc(uid);
+
+    classRef.get().then(() => {
+      if (currentVerify) {
+        classRef.update({
+          verified: false,
+        });
+      } else {
+        classRef.update({
+          verified: true,
+        });
+      }
+    });
+  };
+
+  const getVerifiedStatus = (classCode, uid) => {
     firebase
       .firestore()
       .collection("Classes")
       .doc(classCode)
       .collection("Students")
-      .doc(user.uid)
+      .doc(uid)
       .onSnapshot((doc) => {
         if (doc.data()) {
           setVerifiedStatus(doc.data().verified);
@@ -209,6 +236,8 @@ export const ClassContextProvider = ({ children }) => {
         updateVerifiedStatus,
         getVerifiedStatus,
         getStudentsDetails,
+        updateVerifiedStatusTeacherStudent,
+        verifiedStatus,
         noOfStudents,
         classData,
         studentData,

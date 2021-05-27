@@ -24,9 +24,8 @@ export const ActiveTasksInfoCard = ({
   navigation,
   getVerifiedStatus,
   noOfStudents,
+  verifiedStatus,
 }) => {
-  const [verifiedStatus, setVerifiedStatus] = useState(false);
-
   const {
     className,
     classCode,
@@ -51,7 +50,7 @@ export const ActiveTasksInfoCard = ({
 
   useEffect(() => {
     if (stdClassName) {
-      getVerifiedStatus(stdClassCode, setVerifiedStatus);
+      getVerifiedStatus(stdClassCode, id);
     }
   }, [verifiedStatus]);
 
@@ -76,13 +75,13 @@ export const ActiveTasksInfoCard = ({
               <Spacer position="bottom" size="medium" />
             </Section>
             <Button
-              icon="account-arrow-left-outline"
+              icon="account-details"
               mode="contained"
               onPress={() => {
                 navigation.navigate("ClassDetailsScreen", {
                   classCode,
-                  noOfStudents,
-                  verifiedStatus,
+                  className,
+                  classMaker,
                 });
               }}
             >
@@ -125,7 +124,10 @@ export const ActiveTasksInfoCard = ({
               icon="face-recognition"
               mode="contained"
               onPress={() =>
-                navigation.navigate("ClassJoinedCameraScreen", { stdClassCode })
+                navigation.navigate("ClassJoinedCameraScreen", {
+                  stdClassCode,
+                  id,
+                })
               }
             >
               Verify

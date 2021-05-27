@@ -43,7 +43,7 @@ export const ClassJoinedCameraScreen = ({ navigation, route }) => {
 
   const [type, setType] = useState(Camera.Constants.Type.back);
 
-  const { stdClassCode } = route.params;
+  const { stdClassCode, id } = route.params;
 
   const snap = async () => {
     if (cameraRef) {
@@ -87,7 +87,7 @@ export const ClassJoinedCameraScreen = ({ navigation, route }) => {
         <VerifyButton
           onPress={() => {
             if (true) {
-              updateVerifiedStatus(stdClassCode);
+              updateVerifiedStatus(stdClassCode, id);
             }
             navigation.navigate("DashboardScreen");
           }}

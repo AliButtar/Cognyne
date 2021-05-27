@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo } from "react";
-import { FlatList, TouchableOpacity } from "react-native";
+import { FlatList } from "react-native";
 import styled from "styled-components/native";
 
 import { Text } from "../../../components/typography/text.component";
@@ -45,7 +45,11 @@ export const CurrentTasks = ({ navigation }) => {
     leaveClass,
     getVerifiedStatus,
     noOfStudents,
+    verifiedStatus,
   } = useContext(ClassContext);
+
+  // console.log("--");
+  // console.log(verifiedStatus);
 
   useEffect(() => {
     getActiveTasksClassesCreated();
@@ -83,6 +87,7 @@ export const CurrentTasks = ({ navigation }) => {
                     navigation={navigation}
                     getVerifiedStatus={getVerifiedStatus}
                     noOfStudents={noOfStudents}
+                    verifiedStatus={verifiedStatus}
                   />
                 </Spacer>
               );

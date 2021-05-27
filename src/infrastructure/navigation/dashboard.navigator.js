@@ -53,7 +53,7 @@ export const DashboardNavigator = () => {
       />
       <DashboardStack.Screen
         options={{
-          header: () => null,
+          title: "Class Details",
         }}
         name="ClassDetailsScreen"
         component={ClassDetailsScreen}
