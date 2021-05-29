@@ -1,0 +1,16 @@
+{
+  "results": [
+    {
+      "geometry": {
+        "location": {
+          "lat": 33.649007, 
+          "lng": 73.155274
+        },
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+      "name": "Cafe",
+      "photo": "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
+    }
+  ],
+  "status": "OK"
+}

@@ -1,12 +1,53 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
+import MapView from "react-native-maps";
+import styled from "styled-components/native";
 
-import { SafeArea } from "../../../components/utility/safe-area.component";
-import { Text } from "../../../components/typography/text.component";
+import { LocationContext } from "../services/location/location.context";
+import { BuildingsContext } from "../services/buildings/buildings.context";
 
-export const MapsScreen = () => {
+import { Search } from "../components/search.component";
+import { MapCallout } from "../components/map-callout.component";
+
+const Map = styled(MapView)`
+  height: 100%;
+  width: 100%;
+`;
+
+export const MapsScreen = ({ navigation }) => {
+  const { location } = useContext(LocationContext);
+
+  const { buildings = [] } = useContext(BuildingsContext);
+
+  const { lat, lng } = location;
+
   return (
-    <SafeArea>
-      <Text>Maps Screen</Text>
-    </SafeArea>
+    <>
+      <Search />
+      <Map
+        region={{
+          latitude: lat,
+          longitude: lng,
+          latitudeDelta: 0,
+          longitudeDelta: 0.009,
+        }}
+      >
+        {buildings.map((building) => {
+          return (
+            <MapView.Marker
+              key={building.name}
+              title={building.name}
+              coordinate={{
+                latitude: building.geometry.location.lat,
+                longitude: building.geometry.location.lng,
+              }}
+            >
+              <MapView.Callout>
+                <MapCallout building={building} />
+              </MapView.Callout>
+            </MapView.Marker>
+          );
+        })}
+      </Map>
+    </>
   );
 };
