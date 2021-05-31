@@ -13,6 +13,8 @@ import { ClassContextProvider } from "../../services/classes/classes.context";
 import { LocationContextProvider } from "../../features/maps/services/location/location.context";
 import { BuildingsContextProvider } from "../../features/maps/services/buildings/buildings.context";
 
+import { CounsellorContextProvider } from "../../features/counsellor/services/counsellor.context";
+
 const Tab = createBottomTabNavigator();
 
 const TAB_ICON = {
@@ -52,18 +54,20 @@ export const AppNavigator = () => {
     <ClassContextProvider>
       <LocationContextProvider>
         <BuildingsContextProvider>
-          <Tab.Navigator
-            screenOptions={createScreenOptions}
-            tabBarOptions={{
-              activeTintColor: "blue",
-              inactiveTintColor: "gray",
-            }}
-          >
-            <Tab.Screen name="Dashboard" component={DashboardNavigator} />
-            <Tab.Screen name="Maps" component={MapsScreen} />
-            <Tab.Screen name="Counsellor" component={CounsellorScreen} />
-            <Tab.Screen name="Settings" component={SettingsNavigator} />
-          </Tab.Navigator>
+          <CounsellorContextProvider>
+            <Tab.Navigator
+              screenOptions={createScreenOptions}
+              tabBarOptions={{
+                activeTintColor: "blue",
+                inactiveTintColor: "gray",
+              }}
+            >
+              <Tab.Screen name="Dashboard" component={DashboardNavigator} />
+              <Tab.Screen name="Maps" component={MapsScreen} />
+              <Tab.Screen name="Counsellor" component={CounsellorScreen} />
+              <Tab.Screen name="Settings" component={SettingsNavigator} />
+            </Tab.Navigator>
+          </CounsellorContextProvider>
         </BuildingsContextProvider>
       </LocationContextProvider>
     </ClassContextProvider>

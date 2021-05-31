@@ -1,7 +1,6 @@
 import React, { useState, useContext, createContext, useEffect } from "react";
 
 import { buildingsRequest, buildingsTransform } from "./buildings.service";
-
 import { LocationContext } from "../location/location.context";
 
 export const BuildingsContext = createContext();
