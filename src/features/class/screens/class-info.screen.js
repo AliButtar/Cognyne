@@ -13,6 +13,19 @@ export const ClassInfoScreen = ({ navigation }) => {
   const [className, setClassName] = useState("");
   const [code, setCode] = useState("");
 
+  function makeid(length) {
+    var result = [];
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result.push(
+        characters.charAt(Math.floor(Math.random() * charactersLength))
+      );
+    }
+    return result.join("");
+  }
+
   return (
     <ClassView>
       <ClassNameInput
@@ -29,7 +42,7 @@ export const ClassInfoScreen = ({ navigation }) => {
           onChangeText={(text) => setCode(text)}
         />
 
-        <GenerateButton mode="contained" onPress={() => console.log(className)}>
+        <GenerateButton mode="contained" onPress={() => setCode(makeid(5))}>
           Generate
         </GenerateButton>
       </TwoElementsRow>

@@ -49,6 +49,7 @@ export const ClassContextProvider = ({ children }) => {
   };
 
   const getActiveTasksClassesCreated = () => {
+    setClassData({});
     const activeTasksRef = firebase
       .firestore()
       .collection("ActiveTasks-Created")
@@ -60,6 +61,7 @@ export const ClassContextProvider = ({ children }) => {
   };
 
   const getActiveTasksClassesJoined = () => {
+    setStudentData({});
     const activeTasksRef = firebase
       .firestore()
       .collection("ActiveTasks-Joined")
@@ -67,7 +69,13 @@ export const ClassContextProvider = ({ children }) => {
       .collection("Class");
 
     activeTasksRef.get().then((coll) => {
-      coll.forEach((doc) => setStudentData(doc.data()));
+      coll.forEach((doc) => {
+        if (doc.exists) {
+          setStudentData(doc.data());
+        } else {
+          setStudentData({});
+        }
+      });
     });
   };
 
@@ -105,6 +113,42 @@ export const ClassContextProvider = ({ children }) => {
     });
   };
 
+  const endClass = async (classCode) => {
+    setNoOfStudents(0);
+    const teacherClassRef = await firebase
+      .firestore()
+      .collection("ActiveTasks-Created")
+      .doc(user.uid)
+      .collection("Class");
+
+    await teacherClassRef.doc(classCode).delete();
+
+    studentsDetails.forEach(async (std) => {
+      console.log(std.id);
+      const studentClassRef = await firebase
+        .firestore()
+        .collection("ActiveTasks-Joined")
+        .doc(std.id)
+        .collection("Class");
+
+      const studentClassRef2 = await firebase
+        .firestore()
+        .collection("Classes")
+        .doc(classCode)
+        .collection("Students");
+
+      await studentClassRef2.doc(std.id).delete();
+      await studentClassRef.doc(classCode).delete();
+    });
+
+    const classRef = await firebase.firestore().collection("Classes");
+
+    await classRef.doc(classCode).delete();
+
+    setClassData({});
+    setStudentsDetails([]);
+  };
+
   const leaveClass = (classCode) => {
     const classRef = firebase
       .firestore()
@@ -117,10 +161,12 @@ export const ClassContextProvider = ({ children }) => {
     const classRef2 = firebase.firestore().collection("Classes").doc(classCode);
 
     classRef2.get().then((document) => {
-      const joinedClass = document.data();
-      classRef2.update({
-        totalStudents: joinedClass.totalStudents - 1,
-      });
+      if (document.exists) {
+        const joinedClass = document.data();
+        classRef2.update({
+          totalStudents: joinedClass.totalStudents - 1,
+        });
+      }
 
       classRef2
         .collection("Students")
@@ -137,7 +183,11 @@ export const ClassContextProvider = ({ children }) => {
       .collection("Classes")
       .doc(classCode)
       .onSnapshot((doc) => {
-        setNoOfStudents(doc.data().totalStudents.toString());
+        if (doc.exists) {
+          setNoOfStudents(doc.data().totalStudents.toString());
+        } else {
+          setNoOfStudents(0);
+        }
       });
   };
 
@@ -150,10 +200,12 @@ export const ClassContextProvider = ({ children }) => {
       .doc(uid);
 
     classRef.get().then((doc) => {
-      classRef.update({
-        verified: true,
-      });
-      setVerifiedStatus(doc.data().verified);
+      if (doc.exists) {
+        classRef.update({
+          verified: true,
+        });
+        setVerifiedStatus(doc.data().verified);
+      }
     });
   };
 
@@ -237,6 +289,7 @@ export const ClassContextProvider = ({ children }) => {
         getVerifiedStatus,
         getStudentsDetails,
         updateVerifiedStatusTeacherStudent,
+        endClass,
         verifiedStatus,
         noOfStudents,
         classData,

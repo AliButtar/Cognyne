@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
 
@@ -26,6 +26,12 @@ const CurrentTasksSection = styled.View`
   elevation: 5;
 `;
 
+const EmptyTasksText = styled(Text)`
+  position: absolute;
+  top: 47%;
+  left: 15%;
+`;
+
 const ActiveTasksList = styled(FlatList).attrs({
   contentContainerStyle: {
     padding: 16,
@@ -46,15 +52,19 @@ export const CurrentTasks = ({ navigation }) => {
     getVerifiedStatus,
     noOfStudents,
     verifiedStatus,
+    endClass,
   } = useContext(ClassContext);
+
+  const [refresh, setRefresh] = useState(false);
 
   // console.log("--");
   // console.log(verifiedStatus);
-
+  // After Loing Active Tasks are not Get
   useEffect(() => {
     getActiveTasksClassesCreated();
     getActiveTasksClassesJoined();
-  }, []);
+    setRefresh(false);
+  }, [refresh]);
 
   function isEmpty(obj) {
     for (var key in obj) {
@@ -72,10 +82,16 @@ export const CurrentTasks = ({ navigation }) => {
   return (
     <CurrentTasksSection>
       {isEmpty(classData) && isEmpty(studentData) ? (
-        <Text variant="label">You Currently Don't Have Any Tasks</Text>
+        <EmptyTasksText variant="label">
+          You Currently Don't Have Any Tasks
+        </EmptyTasksText>
       ) : (
         <ActiveTasksList
           data={totalData}
+          onRefresh={() => {
+            setRefresh(true);
+          }}
+          refreshing={refresh}
           renderItem={({ item }) => {
             if (!isEmpty(item)) {
               return (
@@ -88,6 +104,7 @@ export const CurrentTasks = ({ navigation }) => {
                     getVerifiedStatus={getVerifiedStatus}
                     noOfStudents={noOfStudents}
                     verifiedStatus={verifiedStatus}
+                    endClass={endClass}
                   />
                 </Spacer>
               );

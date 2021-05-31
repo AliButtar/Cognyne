@@ -25,6 +25,7 @@ export const ActiveTasksInfoCard = ({
   getVerifiedStatus,
   noOfStudents,
   verifiedStatus,
+  endClass,
 }) => {
   const {
     className,
@@ -74,6 +75,7 @@ export const ActiveTasksInfoCard = ({
               </Text>
               <Spacer position="bottom" size="medium" />
             </Section>
+
             <Button
               icon="account-details"
               mode="contained"

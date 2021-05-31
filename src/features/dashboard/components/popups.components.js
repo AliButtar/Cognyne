@@ -44,7 +44,7 @@ export const Popups = ({ modalVisible, setModalVisible, type }) => {
         useNativeDriverForBackdrop={Platform.OS === "android" ? true : false}
       >
         <CodeInput
-          label={`Enter ${type} Code`}
+          label={`Enter ${type} Code (Case Sensitive)`}
           value={code}
           autoCapitalize="none"
           onChangeText={(text) => setCode(text)}
