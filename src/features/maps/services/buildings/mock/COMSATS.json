@@ -8,9 +8,64 @@
         },
       },
       "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
-      "name": "Cafe",
+      "name": " Zaidi Library",
+      "photo": "https://library.comsats.edu.pk/slides/lib4.jpg",
+    },
+    {
+      "geometry": {
+        "location": {
+          "lat": 33.649133, 
+          "lng": 73.154367
+        },
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+      "name": "Junaid Zaidi Library",
+      "photo": "https://library.comsats.edu.pk/slides/lib4.jpg",
+    },
+     {
+      "geometry": {
+        "location": {
+          "lat": 33.648068, 
+          "lng": 73.156729
+        },
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+      "name": "dgd",
       "photo": "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
-    }
+    },
+    {
+      "geometry": {
+        "location": {
+          "lat": 33.647774, 
+          "lng": 73.156278
+        },
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+      "name": "dd",
+      "photo": "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
+    },
+    {
+      "geometry": {
+        "location": {
+          "lat": 33.649784, 
+          "lng": 73.155334 
+        },
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+      "name": "dds",
+      "photo": "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
+    },
+    {
+      "geometry": {
+        "location": {
+          "lat": 33.650463, 
+          "lng": 73.156289
+        },
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+      "name": "ddwwe",
+      "photo": "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
+    },
   ],
   "status": "OK"
 }
