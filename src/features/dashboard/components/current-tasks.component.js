@@ -29,7 +29,7 @@ const CurrentTasksSection = styled.View`
 const EmptyTasksText = styled(Text)`
   position: absolute;
   top: 47%;
-  left: 15%;
+  left: 14%;
 `;
 
 const ActiveTasksList = styled(FlatList).attrs({

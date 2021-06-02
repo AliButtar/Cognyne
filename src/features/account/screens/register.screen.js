@@ -21,7 +21,7 @@ export const RegisterScreen = ({ navigation }) => {
   const [regNo, setRegNo] = useState("");
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
-  const { onRegister, isLoading, error } = useContext(AuthenticationContext);
+  const { isLoading, error } = useContext(AuthenticationContext);
 
   return (
     <AccountBackground>
@@ -92,7 +92,13 @@ export const RegisterScreen = ({ navigation }) => {
                     regNo: regNo,
                     email: email,
                   };
-                  onRegister(email, password, repeatedPassword, data);
+                  navigation.navigate("RegisterCameraScreen", {
+                    email,
+                    password,
+                    repeatedPassword,
+                    data,
+                  });
+                  // onRegister(email, password, repeatedPassword, data);
                 }}
               >
                 Register
