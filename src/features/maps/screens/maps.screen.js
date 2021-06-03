@@ -20,6 +20,8 @@ export const MapsScreen = ({ navigation }) => {
 
   const { lat, lng } = location;
 
+  const color = "turquoise";
+
   return (
     <>
       <Search />

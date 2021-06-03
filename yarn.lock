@@ -4229,7 +4229,7 @@ expo-error-recovery@~2.1.0:
   resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-2.1.0.tgz#7baf6cabc53162cdd2b36edb20b8aa6d1cdc1107"
   integrity sha512-N5g2QKtdNntUNGQVnB/tG1jHdtJP1+kLMWDS+7ZKRcKfulm3JX/M3l460fsEtqg84n/latxPkBT0yfKw2DSq+Q==
 
-expo-face-detector@~10.0.1:
+expo-face-detector@^10.0.1:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/expo-face-detector/-/expo-face-detector-10.0.1.tgz#d12b5054783b5981651fa54468e654335e04b701"
   integrity sha512-brfJDx8nBhmtOeDo0Ng8NsvaFcaLjQGOBwhXHoXZZtXtHW0b+sbgIbgbP/r7up8o2MyknUr4iPu/6hjlmQHFKQ==

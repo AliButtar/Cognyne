@@ -1,7 +1,7 @@
 import comsats_isb from "./COMSATS.json";
 
 export const mocks = {
-  "33.651592,73.156456": comsats_isb,
+  "33.651826,73.156593": comsats_isb,
 };
 
 export const mockImages = [

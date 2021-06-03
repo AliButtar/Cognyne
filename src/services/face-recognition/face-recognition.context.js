@@ -22,7 +22,7 @@ export const FaceVerificationContextProvider = ({ children }) => {
       await tf.ready();
 
       const modelJson =
-        "http://192.168.10.14:8080/exported-modelstfjs/model.json";
+        "http://192.168.8.102:8080/exported-modelstfjs/model.json";
 
       await tf.loadGraphModel(modelJson).then((model) => {
         console.log("tf ready");
@@ -125,8 +125,8 @@ export const FaceVerificationContextProvider = ({ children }) => {
       .then(async (doc) => {
         const cloudEncoding = await doc.data().faceEncoding;
 
-        console.log(distance(cloudEncoding, encoding));
-        if (distance(cloudEncoding, encoding) > 10) {
+        console.log(cosSimilarity(cloudEncoding, encoding));
+        if (cosSimilarity(cloudEncoding, encoding) < 0.9) {
           flag = false;
         } else {
           flag = true;
