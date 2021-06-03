@@ -2,7 +2,6 @@ import React, { useState, createContext, useEffect, useContext } from "react";
 import * as firebase from "firebase";
 
 import { loginRequest } from "./authentication.service";
-import { FaceVerificationContext } from "../face-recognition/face-recognition.context";
 
 export const AuthenticationContext = createContext();
 

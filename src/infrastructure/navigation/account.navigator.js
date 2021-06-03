@@ -5,6 +5,7 @@ import { AccountScreen } from "../../features/account/screens/account.screen";
 import { LoginScreen } from "../../features/account/screens/login.screen";
 import { RegisterScreen } from "../../features/account/screens/register.screen";
 import { RegisterCameraScreen } from "../../features/account/screens/register-camera.screen";
+import { LoginCameraScreen } from "../../features/account/screens/login-camera.screen";
 
 const Stack = createStackNavigator();
 
@@ -17,5 +18,6 @@ export const AccountNavigator = () => (
       name="RegisterCameraScreen"
       component={RegisterCameraScreen}
     />
+    <Stack.Screen name="LoginCameraScreen" component={LoginCameraScreen} />
   </Stack.Navigator>
 );

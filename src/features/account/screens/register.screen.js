@@ -91,6 +91,7 @@ export const RegisterScreen = ({ navigation }) => {
                     fullName: fullName,
                     regNo: regNo,
                     email: email,
+                    password: password,
                   };
                   navigation.navigate("RegisterCameraScreen", {
                     email,

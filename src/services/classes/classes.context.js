@@ -79,13 +79,16 @@ export const ClassContextProvider = ({ children }) => {
     });
   };
 
-  const joinClass = (classCode) => {
-    const classRef = firebase.firestore().collection("Classes").doc(classCode);
+  const joinClass = async (classCode) => {
+    const classRef = await firebase
+      .firestore()
+      .collection("Classes")
+      .doc(classCode);
 
-    classRef.get().then((document) => {
-      const joinedClass = document.data();
+    await classRef.get().then(async (document) => {
+      const joinedClass = await document.data();
 
-      classRef.update({
+      await classRef.update({
         totalStudents: joinedClass.totalStudents + 1,
       });
       const studentDataLocal = {
@@ -100,16 +103,16 @@ export const ClassContextProvider = ({ children }) => {
 
       setStudentData(studentDataLocal);
       // write logic for if class maker and joiner is same, throw error
-      classRef.collection("Students").doc(user.uid).set(studentDataLocal);
+      await classRef.collection("Students").doc(user.uid).set(studentDataLocal);
 
-      const classRef2 = firebase
+      const classRef2 = await firebase
         .firestore()
         .collection("ActiveTasks-Joined")
         .doc(user.uid)
         .collection("Class")
         .doc(classCode);
 
-      classRef2.set(studentDataLocal);
+      await classRef2.set(studentDataLocal);
     });
   };
 
@@ -191,15 +194,15 @@ export const ClassContextProvider = ({ children }) => {
       });
   };
 
-  const updateVerifiedStatus = (classCode, uid) => {
-    const classRef = firebase
+  const updateVerifiedStatus = async (classCode, uid) => {
+    const classRef = await firebase
       .firestore()
       .collection("Classes")
       .doc(classCode)
       .collection("Students")
       .doc(uid);
 
-    classRef.get().then((doc) => {
+    await classRef.get().then((doc) => {
       if (doc.exists) {
         classRef.update({
           verified: true,
