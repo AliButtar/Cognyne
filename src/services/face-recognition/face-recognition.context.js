@@ -35,7 +35,7 @@ export const FaceVerificationContextProvider = ({ children }) => {
     if (recognizer === "") {
       loadModel();
     }
-  }, []);
+  }, [recognizer]);
 
   const getFaceEncoding = async (faces, photo) => {
     try {
@@ -105,18 +105,18 @@ export const FaceVerificationContextProvider = ({ children }) => {
 
   const compareFaceEncodingWithUser = async (usr, encoding) => {
     const userRef = await firebase.firestore().collection("users");
-    function distanceSquared(a, b) {
-      var sum = 0;
-      var n;
-      for (n = 0; n < a.length; n++) {
-        sum += Math.pow(a[n] - b[n], 2);
-      }
-      return sum;
-    }
+    // function distanceSquared(a, b) {
+    //   var sum = 0;
+    //   var n;
+    //   for (n = 0; n < a.length; n++) {
+    //     sum += Math.pow(a[n] - b[n], 2);
+    //   }
+    //   return sum;
+    // }
 
-    function distance(a, b) {
-      return Math.sqrt(distanceSquared(a, b));
-    }
+    // function distance(a, b) {
+    //   return Math.sqrt(distanceSquared(a, b));
+    // }
     var flag = false;
     console.log(usr.uid);
     await userRef
@@ -125,14 +125,42 @@ export const FaceVerificationContextProvider = ({ children }) => {
       .then(async (doc) => {
         const cloudEncoding = await doc.data().faceEncoding;
 
-        console.log(distance(cloudEncoding, encoding));
-        if (distance(cloudEncoding, encoding) > 10) {
+        console.log(cosSimilarity(cloudEncoding, encoding));
+        if (cosSimilarity(cloudEncoding, encoding) < 0.9) {
           flag = false;
         } else {
           flag = true;
         }
       });
     console.log(flag);
+    return flag;
+  };
+
+  const compareFaceEncodingWithAll = async (encoding) => {
+    const userRefColl = await firebase.firestore().collection("users");
+    var flag = { flag: false };
+    var BreakException = {};
+
+    try {
+      await userRefColl
+        .get()
+        .then(async (coll) => {
+          await coll.forEach(async (doc) => {
+            const cloudEncoding = await doc.data().faceEncoding;
+
+            console.log(cosSimilarity(cloudEncoding, encoding));
+            if (cosSimilarity(cloudEncoding, encoding) > 0.9) {
+              flag = { flag: true, userData: doc.data() };
+              throw BreakException;
+            }
+          });
+        })
+        .catch((err) => console.log(err));
+    } catch (e) {
+      if (e !== BreakException) {
+        throw e;
+      }
+    }
     return flag;
   };
 
@@ -143,6 +171,7 @@ export const FaceVerificationContextProvider = ({ children }) => {
         isTfReady,
         getFaceEncoding,
         compareFaceEncodingWithUser,
+        compareFaceEncodingWithAll,
       }}
     >
       {children}

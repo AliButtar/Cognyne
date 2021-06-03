@@ -60,6 +60,19 @@ export const LoginScreen = ({ navigation }) => {
             <ActivityIndicator animating={true} color={Colors.blue300} />
           )}
         </Spacer>
+        <Spacer size="large">
+          {!isLoading ? (
+            <AuthButton
+              icon="face-recognition"
+              mode="contained"
+              onPress={() => navigation.navigate("LoginCameraScreen")}
+            >
+              Login by Face
+            </AuthButton>
+          ) : (
+            <ActivityIndicator animating={true} color={Colors.blue300} />
+          )}
+        </Spacer>
       </AccountContainer>
       <Spacer size="large">
         <AuthButton mode="contained" onPress={() => navigation.goBack()}>

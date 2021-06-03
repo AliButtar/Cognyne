@@ -36,20 +36,19 @@ const VerifyButton = styled(Button).attrs({
   margin-bottom: ${(props) => props.theme.space[4]};
 `;
 
-export const ClassJoinedCameraScreen = ({ navigation, route }) => {
+export const LoginCameraScreen = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.front);
   const [photo, setPhoto] = useState(null);
   const cameraRef = useRef();
 
-  const { user } = useContext(AuthenticationContext);
-  const { updateVerifiedStatus, error } = useContext(ClassContext);
+  const { user, onLogin } = useContext(AuthenticationContext);
 
-  const { stdClassCode, id } = route.params;
+  //   const { email, password, repeatedPassword, data } = route.params;
 
   const [faces, setFaces] = useState({ faces: [] });
 
-  const { compareFaceEncodingWithUser, getFaceEncoding } = useContext(
+  const { getFaceEncoding, compareFaceEncodingWithAll } = useContext(
     FaceVerificationContext
   );
 
@@ -60,13 +59,21 @@ export const ClassJoinedCameraScreen = ({ navigation, route }) => {
       });
       setPhoto(picture);
 
+      navigation.goBack();
       const faceEncoding = await getFaceEncoding(faces, picture);
-      const flag = await compareFaceEncodingWithUser(user, faceEncoding);
 
-      if (flag) {
-        updateVerifiedStatus(stdClassCode, id);
+      const data = await compareFaceEncodingWithAll(faceEncoding);
+
+      navigation.goBack();
+      if (data.flag) {
+        console.log(data.userData.email, data.userData.password);
+        await onLogin(data.userData.email, data.userData.password);
       }
-      navigation.navigate("DashboardScreen");
+      //   console.log(data2.email);
+
+      //AsyncStorage.setItem(`${user.uid}-photo`, photo.uri);
+
+      // console.log(picture);
     }
   };
 
@@ -77,6 +84,12 @@ export const ClassJoinedCameraScreen = ({ navigation, route }) => {
     })();
   }, []);
 
+  // useEffect(() => {
+  //   if (faces.faces.length) {
+  //     snap();
+  //   }
+  // }, [faces]);
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -84,41 +97,45 @@ export const ClassJoinedCameraScreen = ({ navigation, route }) => {
     return <Text>No access to camera</Text>;
   }
   return (
-    <View>
-      <ProfileCamera
-        ref={(camera) => (cameraRef.current = camera)}
-        type={type}
-        ratio={"16:9"}
-        onFacesDetected={(face) => setFaces(face)}
-        faceDetectorSettings={{
-          mode: FaceDetector.Constants.Mode.fast,
-          detectLandmarks: FaceDetector.Constants.Landmarks.none,
-          runClassifications: FaceDetector.Constants.Classifications.none,
-          minDetectionInterval: 100,
-          tracking: true,
-        }}
-      >
-        <CameraView>
-          <FlipButton
-            icon="camera-retake"
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}
-          />
-          <FaceVerification faces={faces} photo={photo} />
-        </CameraView>
-        <VerifyButton
-          onPress={() => {
-            snap();
+    <>
+      <View>
+        <ProfileCamera
+          ref={(camera) => (cameraRef.current = camera)}
+          type={type}
+          ratio={"16:9"}
+          onFacesDetected={(face) => setFaces(face)}
+          faceDetectorSettings={{
+            mode: FaceDetector.Constants.Mode.fast,
+            detectLandmarks: FaceDetector.Constants.Landmarks.none,
+            runClassifications: FaceDetector.Constants.Classifications.none,
+            minDetectionInterval: 100,
+            tracking: true,
           }}
         >
-          Verify
-        </VerifyButton>
-      </ProfileCamera>
-    </View>
+          <CameraView>
+            <FlipButton
+              icon="camera-retake"
+              onPress={() => {
+                setType(
+                  type === Camera.Constants.Type.back
+                    ? Camera.Constants.Type.front
+                    : Camera.Constants.Type.back
+                );
+              }}
+            />
+            <FaceVerification faces={faces} photo={photo} />
+          </CameraView>
+          <VerifyButton
+            onPress={() => {
+              snap();
+              // onClassCreate(className, code);
+              // navigation.navigate("DashboardScreen");
+            }}
+          >
+            Verify
+          </VerifyButton>
+        </ProfileCamera>
+      </View>
+    </>
   );
 };
