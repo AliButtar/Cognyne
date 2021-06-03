@@ -16,8 +16,8 @@ export const locations = {
       {
         geometry: {
           location: {
-            lng: 72.993065,
-            lat: 33.642471,
+            lng: 72.989648,
+            lat: 33.643867,
           },
         },
       },
