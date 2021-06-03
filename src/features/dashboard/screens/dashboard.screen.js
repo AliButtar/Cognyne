@@ -50,7 +50,10 @@ export const DashboardScreen = ({ navigation }) => {
             expanded={eventExpanded}
             onPress={() => setEventExpanded(!eventExpanded)}
           >
-            <List.Item title="Create Event" />
+            <List.Item
+              title="Create Event"
+              onPress={() => navigation.navigate("EventInfoScreen")}
+            />
             <List.Item
               title="Join Event"
               onPress={() => {

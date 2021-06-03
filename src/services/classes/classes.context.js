@@ -1,6 +1,5 @@
 import React, { useState, createContext, useContext } from "react";
 import * as firebase from "firebase";
-import { onSnapshot } from "firebase/firestore";
 
 import { AuthenticationContext } from "../authentication/authentication.context";
 

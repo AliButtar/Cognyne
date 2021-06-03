@@ -8,6 +8,7 @@ import { Spacer } from "../../../components/spacer/spacer.component";
 
 import { ClassContext } from "../../../services/classes/classes.context";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
+import { EventContext } from "../../../services/events/events.context";
 
 //import theme for margin
 const CurrentTasksSection = styled.View`
@@ -55,6 +56,19 @@ export const CurrentTasks = ({ navigation }) => {
     endClass,
   } = useContext(ClassContext);
 
+  const {
+    eventData,
+    participantData,
+    getActiveTasksEventsCreated,
+    getActiveTasksEventsJoined,
+    getParticipantsInEvent,
+    leaveEvent,
+    getParticipantVerifiedStatus,
+    noOfParticipants,
+    participantVerifiedStatus,
+    endEvent,
+  } = useContext(EventContext);
+
   const [refresh, setRefresh] = useState(false);
 
   // console.log("--");
@@ -62,7 +76,11 @@ export const CurrentTasks = ({ navigation }) => {
   // After Loing Active Tasks are not Get
   useEffect(() => {
     getActiveTasksClassesCreated();
+    getActiveTasksEventsCreated();
+
     getActiveTasksClassesJoined();
+    getActiveTasksEventsJoined();
+
     setRefresh(false);
   }, [refresh]);
 
@@ -77,11 +95,14 @@ export const CurrentTasks = ({ navigation }) => {
 
   // const { stdClassName } = studentData;
   // const { className } = classData;
-  const totalData = [classData, studentData];
+  const totalData = [classData, studentData, eventData, participantData];
   // console.log(totalData);
   return (
     <CurrentTasksSection>
-      {isEmpty(classData) && isEmpty(studentData) ? (
+      {isEmpty(classData) &&
+      isEmpty(studentData) &&
+      isEmpty(eventData) &&
+      isEmpty(participantData) ? (
         <EmptyTasksText variant="label">
           You Currently Don't Have Any Tasks
         </EmptyTasksText>
@@ -98,13 +119,19 @@ export const CurrentTasks = ({ navigation }) => {
                 <Spacer position="bottom" size="large">
                   <ActiveTasksInfoCard
                     data={item}
+                    navigation={navigation}
                     getStudentsInClass={getStudentsInClass}
                     leaveClass={leaveClass}
-                    navigation={navigation}
                     getVerifiedStatus={getVerifiedStatus}
                     noOfStudents={noOfStudents}
                     verifiedStatus={verifiedStatus}
                     endClass={endClass}
+                    getParticipantsInEvent={getParticipantsInEvent}
+                    leaveEvent={leaveEvent}
+                    getParticipantVerifiedStatus={getParticipantVerifiedStatus}
+                    noOfParticipants={noOfParticipants}
+                    participantVerifiedStatus={participantVerifiedStatus}
+                    endEvent={endEvent}
                   />
                 </Spacer>
               );

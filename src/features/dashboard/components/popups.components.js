@@ -8,6 +8,7 @@ import { colors } from "../../../infrastructure/theme/colors";
 import { Spacer } from "../../../components/spacer/spacer.component";
 
 import { ClassContext } from "../../../services/classes/classes.context";
+import { EventContext } from "../../../services/events/events.context";
 
 const Popup = styled(Modal).attrs({
   backdropOpacity: Platform.OS === "android" ? 0.5 : 0.7,
@@ -34,6 +35,7 @@ export const Popups = ({ modalVisible, setModalVisible, type }) => {
   const [code, setCode] = useState("");
 
   const { joinClass } = useContext(ClassContext);
+  const { joinEvent } = useContext(EventContext);
 
   return (
     <ModalView>
@@ -53,7 +55,11 @@ export const Popups = ({ modalVisible, setModalVisible, type }) => {
           <SubmitButton
             mode="contained"
             onPress={() => {
-              joinClass(code);
+              if (type === "Class") {
+                joinClass(code);
+              } else if (type === "Event") {
+                joinEvent(code);
+              }
               setModalVisible(!modalVisible);
               setCode("");
             }}

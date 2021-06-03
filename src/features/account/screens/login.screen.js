@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ActivityIndicator, Colors } from "react-native-paper";
 
 import {
@@ -18,6 +18,10 @@ export const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { onLogin, error, isLoading } = useContext(AuthenticationContext);
+
+  // useEffect(() => {
+  //   console.log(isLoading);
+  // }, [isLoading]);
 
   return (
     <AccountBackground>

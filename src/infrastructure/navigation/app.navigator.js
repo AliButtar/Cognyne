@@ -9,6 +9,7 @@ import { DashboardNavigator } from "./dashboard.navigator";
 import { SettingsNavigator } from "./settings.navigator";
 
 import { ClassContextProvider } from "../../services/classes/classes.context";
+import { EventContextProvider } from "../../services/events/events.context";
 
 import { LocationContextProvider } from "../../features/maps/services/location/location.context";
 import { BuildingsContextProvider } from "../../features/maps/services/buildings/buildings.context";
@@ -51,25 +52,27 @@ const createScreenOptions = ({ route }) => {
 
 export const AppNavigator = () => {
   return (
-    <ClassContextProvider>
-      <LocationContextProvider>
-        <BuildingsContextProvider>
-          <CounsellorContextProvider>
-            <Tab.Navigator
-              screenOptions={createScreenOptions}
-              tabBarOptions={{
-                activeTintColor: "blue",
-                inactiveTintColor: "gray",
-              }}
-            >
-              <Tab.Screen name="Dashboard" component={DashboardNavigator} />
-              <Tab.Screen name="Maps" component={MapsScreen} />
-              <Tab.Screen name="Counsellor" component={CounsellorScreen} />
-              <Tab.Screen name="Settings" component={SettingsNavigator} />
-            </Tab.Navigator>
-          </CounsellorContextProvider>
-        </BuildingsContextProvider>
-      </LocationContextProvider>
-    </ClassContextProvider>
+    <EventContextProvider>
+      <ClassContextProvider>
+        <LocationContextProvider>
+          <BuildingsContextProvider>
+            <CounsellorContextProvider>
+              <Tab.Navigator
+                screenOptions={createScreenOptions}
+                tabBarOptions={{
+                  activeTintColor: "blue",
+                  inactiveTintColor: "gray",
+                }}
+              >
+                <Tab.Screen name="Dashboard" component={DashboardNavigator} />
+                <Tab.Screen name="Maps" component={MapsScreen} />
+                <Tab.Screen name="Counsellor" component={CounsellorScreen} />
+                <Tab.Screen name="Settings" component={SettingsNavigator} />
+              </Tab.Navigator>
+            </CounsellorContextProvider>
+          </BuildingsContextProvider>
+        </LocationContextProvider>
+      </ClassContextProvider>
+    </EventContextProvider>
   );
 };

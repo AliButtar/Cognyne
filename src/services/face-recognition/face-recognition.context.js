@@ -22,7 +22,7 @@ export const FaceVerificationContextProvider = ({ children }) => {
       await tf.ready();
 
       const modelJson =
-        "http://192.168.8.102:8080/exported-modelstfjs/model.json";
+        "http://192.168.10.14:8080/exported-modelstfjs/model.json";
 
       await tf.loadGraphModel(modelJson).then((model) => {
         console.log("tf ready");
@@ -35,7 +35,7 @@ export const FaceVerificationContextProvider = ({ children }) => {
     if (recognizer === "") {
       loadModel();
     }
-  }, [recognizer]);
+  }, []);
 
   const getFaceEncoding = async (faces, photo) => {
     try {

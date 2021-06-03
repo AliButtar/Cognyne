@@ -19,19 +19,25 @@ import {
 
 export const ActiveTasksInfoCard = ({
   data = {},
+  navigation,
   getStudentsInClass,
   leaveClass,
-  navigation,
   getVerifiedStatus,
   noOfStudents,
   verifiedStatus,
-  endClass,
+
+  getParticipantsInEvent,
+  leaveEvent,
+  getParticipantVerifiedStatus,
+  noOfParticipants,
+  participantVerifiedStatus,
 }) => {
   const {
     className,
     classCode,
     classMaker,
     classMakerUID,
+
     id,
     name,
     regNo,
@@ -39,6 +45,20 @@ export const ActiveTasksInfoCard = ({
     stdClassCode,
     stdClassMaker,
     verified,
+
+    eventName,
+    eventCode,
+    eventMaker,
+    eventMakerUID,
+    totalParticipants,
+
+    ptcId,
+    ptcName,
+    ptcRegNo,
+    ptcEventName,
+    ptcEventCode,
+    ptcVerified,
+    ptcEventMaker,
   } = data;
 
   // console.log(data);
@@ -54,6 +74,18 @@ export const ActiveTasksInfoCard = ({
       getVerifiedStatus(stdClassCode, id);
     }
   }, [verifiedStatus]);
+
+  useEffect(() => {
+    if (eventName) {
+      getParticipantsInEvent(eventCode);
+    }
+  }, [noOfParticipants]);
+
+  useEffect(() => {
+    if (ptcEventName) {
+      getParticipantVerifiedStatus(ptcEventCode, ptcId);
+    }
+  }, [participantVerifiedStatus]);
 
   return (
     <>
@@ -129,6 +161,86 @@ export const ActiveTasksInfoCard = ({
                 navigation.navigate("ClassJoinedCameraScreen", {
                   stdClassCode,
                   id,
+                })
+              }
+            >
+              Verify
+            </Button>
+          </>
+        )}
+
+        {eventName && (
+          <>
+            <Info>
+              <Text variant="body">{"Created Event:"}</Text>
+            </Info>
+            <Section>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Event Name: " + eventName}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Event Code: " + eventCode}</Text>
+              </Spacer>
+              <Text variant="label">
+                {"Number of Particpicants: " + noOfParticipants}
+              </Text>
+              <Spacer position="bottom" size="medium" />
+            </Section>
+
+            <Button
+              icon="account-details"
+              mode="contained"
+              onPress={() => {
+                navigation.navigate("EventDetailsScreen", {
+                  eventCode,
+                  eventName,
+                  eventMaker,
+                });
+              }}
+            >
+              Details
+            </Button>
+          </>
+        )}
+
+        {ptcEventName && (
+          <>
+            <Info>
+              <Text variant="body">{"Joined Event:"}</Text>
+            </Info>
+            <Section>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Event Name: " + ptcEventName}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Event Code: " + ptcEventCode}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Event Maker: " + ptcEventMaker}</Text>
+              </Spacer>
+              <Text variant="label">
+                Verified: {participantVerifiedStatus ? "Yes" : "No"}
+              </Text>
+              <Spacer position="bottom" size="medium" />
+            </Section>
+
+            <LeaveButton
+              icon="account-arrow-left-outline"
+              mode="contained"
+              onPress={() => {
+                leaveEvent(ptcEventCode);
+              }}
+            >
+              Leave
+            </LeaveButton>
+
+            <Button
+              icon="face-recognition"
+              mode="contained"
+              onPress={() =>
+                navigation.navigate("EventJoinedCameraScreen", {
+                  ptcEventCode,
+                  ptcId,
                 })
               }
             >

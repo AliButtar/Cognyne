@@ -11,6 +11,11 @@ import { ClassCameraScreen } from "../../features/class/screens/camera-class.scr
 import { ClassJoinedCameraScreen } from "../../features/dashboard/screens/camera-class-join.screen";
 import { ClassDetailsScreen } from "../../features/class/screens/class-details.screen";
 
+import { EventInfoScreen } from "../../features/event/screens/event-info.screen";
+import { EventCameraScreen } from "../../features/event/screens/camera-event.screen";
+import { EventJoinedCameraScreen } from "../../features/dashboard/screens/camera-event-join.screen";
+import { EventDetailsScreen } from "../../features/event/screens/event-details.screen";
+
 const DashboardStack = createStackNavigator();
 
 export const DashboardNavigator = () => {
@@ -39,6 +44,13 @@ export const DashboardNavigator = () => {
       />
       <DashboardStack.Screen
         options={{
+          title: "Enter Event Info",
+        }}
+        name="EventInfoScreen"
+        component={EventInfoScreen}
+      />
+      <DashboardStack.Screen
+        options={{
           title: "Verify Face",
         }}
         name="ClassCameraScreen"
@@ -48,8 +60,29 @@ export const DashboardNavigator = () => {
         options={{
           title: "Verify Face",
         }}
+        name="EventCameraScreen"
+        component={EventCameraScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "Verify Face",
+        }}
         name="ClassJoinedCameraScreen"
         component={ClassJoinedCameraScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "Verify Face",
+        }}
+        name="EventJoinedCameraScreen"
+        component={EventJoinedCameraScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "Event Details",
+        }}
+        name="EventDetailsScreen"
+        component={EventDetailsScreen}
       />
       <DashboardStack.Screen
         options={{
