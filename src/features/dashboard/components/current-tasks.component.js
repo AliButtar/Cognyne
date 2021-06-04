@@ -10,6 +10,7 @@ import { ClassContext } from "../../../services/classes/classes.context";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 import { EventContext } from "../../../services/events/events.context";
 import { BusContext } from "../../../services/busses/busses.context";
+import { UniversityContext } from "../../../services/universities/universities.context";
 
 //import theme for margin
 const CurrentTasksSection = styled.View`
@@ -83,6 +84,19 @@ export const CurrentTasks = ({ navigation }) => {
     endBus,
   } = useContext(BusContext);
 
+  const {
+    universityData,
+    universityStudentData,
+    getActiveTasksUniversitiesCreated,
+    getActiveTasksUniversitiesJoined,
+    getStudentsInUniversity,
+    leaveUniversity,
+    getUniversityStdVerifiedStatus,
+    noOfUniversityStudents,
+    universityStdVerifiedStatus,
+    endUniversity,
+  } = useContext(UniversityContext);
+
   const [refresh, setRefresh] = useState(false);
 
   // console.log("--");
@@ -92,10 +106,12 @@ export const CurrentTasks = ({ navigation }) => {
     getActiveTasksClassesCreated();
     getActiveTasksEventsCreated();
     getActiveTasksBussesCreated();
+    getActiveTasksUniversitiesCreated();
 
     getActiveTasksClassesJoined();
     getActiveTasksEventsJoined();
     getActiveTasksBussesJoined();
+    getActiveTasksUniversitiesJoined();
 
     setRefresh(false);
   }, [refresh]);
@@ -118,6 +134,8 @@ export const CurrentTasks = ({ navigation }) => {
     participantData,
     busData,
     busMemberData,
+    universityData,
+    universityStudentData,
   ];
   // console.log(totalData);
   return (
@@ -127,7 +145,9 @@ export const CurrentTasks = ({ navigation }) => {
       isEmpty(eventData) &&
       isEmpty(participantData) &&
       isEmpty(busData) &&
-      isEmpty(busMemberData) ? (
+      isEmpty(busMemberData) &&
+      isEmpty(universityData) &&
+      isEmpty(universityStudentData) ? (
         <EmptyTasksText variant="label">
           You Currently Don't Have Any Tasks
         </EmptyTasksText>
@@ -163,6 +183,14 @@ export const CurrentTasks = ({ navigation }) => {
                     noOfBusMembers={noOfBusMembers}
                     busMemberVerifiedStatus={busMemberVerifiedStatus}
                     endBus={endBus}
+                    getStudentsInUniversity={getStudentsInUniversity}
+                    leaveUniversity={leaveUniversity}
+                    getUniversityStdVerifiedStatus={
+                      getUniversityStdVerifiedStatus
+                    }
+                    noOfUniversityStudents={noOfUniversityStudents}
+                    universityStdVerifiedStatus={universityStdVerifiedStatus}
+                    endUniversity={endUniversity}
                   />
                 </Spacer>
               );

@@ -38,6 +38,12 @@ export const ActiveTasksInfoCard = ({
   getBusMemberVerifiedStatus,
   noOfBusMembers,
   busMemberVerifiedStatus,
+
+  getStudentsInUniversity,
+  leaveUniversity,
+  getUniversityStdVerifiedStatus,
+  noOfUniversityStudents,
+  universityStdVerifiedStatus,
 }) => {
   const {
     className,
@@ -88,6 +94,20 @@ export const ActiveTasksInfoCard = ({
     bmBusTime,
     bmVerified,
     bmBusMaker,
+
+    universityName,
+    universityCode,
+    universityMaker,
+    universityMakerUID,
+    totalUniversityStudents,
+
+    stdId,
+    stdName,
+    stdRegNo,
+    stdUniversityName,
+    stdUniversityCode,
+    stdUniversityVerified,
+    stdUniversityMaker,
   } = data;
 
   // console.log(data);
@@ -127,6 +147,18 @@ export const ActiveTasksInfoCard = ({
       getBusMemberVerifiedStatus(bmBusCode, bmId);
     }
   }, [busMemberVerifiedStatus]);
+
+  useEffect(() => {
+    if (universityName) {
+      getStudentsInUniversity(universityCode);
+    }
+  }, [noOfUniversityStudents]);
+
+  useEffect(() => {
+    if (stdUniversityName) {
+      getUniversityStdVerifiedStatus(stdUniversityCode, stdId);
+    }
+  }, [universityStdVerifiedStatus]);
 
   return (
     <>
@@ -390,6 +422,98 @@ export const ActiveTasksInfoCard = ({
                 navigation.navigate("BusJoinedCameraScreen", {
                   bmBusCode,
                   bmId,
+                })
+              }
+            >
+              Verify
+            </Button>
+          </>
+        )}
+
+        {universityName && (
+          <>
+            <Info>
+              <Text variant="body">{"Created University:"}</Text>
+            </Info>
+            <Section>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">
+                  {"University Name: " + universityName}
+                </Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">
+                  {"University Code: " + universityCode}
+                </Text>
+              </Spacer>
+              <Text variant="label">
+                {"Number of Students: " + noOfUniversityStudents}
+              </Text>
+              <Spacer position="bottom" size="medium" />
+            </Section>
+
+            <Button
+              icon="account-details"
+              mode="contained"
+              onPress={() => {
+                navigation.navigate("UniversityDetailsScreen", {
+                  universityCode,
+                  universityName,
+                  universityMaker,
+                });
+              }}
+            >
+              Details
+            </Button>
+          </>
+        )}
+
+        {stdUniversityName && (
+          <>
+            <Info>
+              <Spacer position="bottom" size="medium">
+                <Text variant="body">{"Joined University:"}</Text>
+              </Spacer>
+            </Info>
+            <Section>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">
+                  {"University Name: " + stdUniversityName}
+                </Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">
+                  {"University Code: " + stdUniversityCode}
+                </Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">
+                  {"University Maker: " + stdUniversityMaker}
+                </Text>
+              </Spacer>
+              <Text variant="label">
+                Verified: {universityStdVerifiedStatus ? "Yes" : "No"}
+              </Text>
+              <Spacer position="bottom" size="medium" />
+            </Section>
+
+            <LeaveButton
+              icon="account-arrow-left-outline"
+              mode="contained"
+              onPress={() => {
+                leaveUniversity(stdUniversityCode);
+              }}
+            >
+              Leave
+            </LeaveButton>
+
+            <Button
+              icon="face-recognition"
+              mode="contained"
+              onPress={() =>
+                navigation.navigate("UniversityJoinedCameraScreen", {
+                  stdUniversityCode,
+                  stdId,
                 })
               }
             >

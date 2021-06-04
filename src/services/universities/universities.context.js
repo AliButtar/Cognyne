@@ -139,7 +139,7 @@ export const UniversityContextProvider = ({ children }) => {
       const studentUniRef = await firebase
         .firestore()
         .collection("ActiveTasks-Joined")
-        .doc(std.id)
+        .doc(std.stdId)
         .collection("University");
 
       const studentUniRef2 = await firebase
@@ -148,7 +148,7 @@ export const UniversityContextProvider = ({ children }) => {
         .doc(universityCode)
         .collection("University-Students");
 
-      await studentUniRef2.doc(std.id).delete();
+      await studentUniRef2.doc(std.stdId).delete();
       await studentUniRef.doc(universityCode).delete();
     });
 
@@ -218,9 +218,9 @@ export const UniversityContextProvider = ({ children }) => {
     await uniRef.get().then((doc) => {
       if (doc.exists) {
         uniRef.update({
-          verified: true,
+          stdUniversityVerified: true,
         });
-        setUniversityStdVerifiedStatus(doc.data().verified);
+        setUniversityStdVerifiedStatus(doc.data().stdUniversityVerified);
       }
     });
   };
@@ -240,11 +240,11 @@ export const UniversityContextProvider = ({ children }) => {
     uniRef.get().then(() => {
       if (currentVerify) {
         uniRef.update({
-          verified: false,
+          stdUniversityVerified: false,
         });
       } else {
         uniRef.update({
-          verified: true,
+          stdUniversityVerified: true,
         });
       }
     });
@@ -259,7 +259,7 @@ export const UniversityContextProvider = ({ children }) => {
       .doc(uid)
       .onSnapshot((doc) => {
         if (doc.data()) {
-          setUniversityStdVerifiedStatus(doc.data().verified);
+          setUniversityStdVerifiedStatus(doc.data().stdUniversityVerified);
         }
       });
   };

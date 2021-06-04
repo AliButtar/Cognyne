@@ -17,33 +17,39 @@ export const UniversityStudentCard = ({
   updateVerifiedStatusMakerStudent,
 }) => {
   const {
-    id,
-    name,
-    regNo,
+    stdId,
+    stdName,
+    stdRegNo,
     stdUniversityCode,
     stdUniversityMaker,
     stdUniversityName,
-    verified,
+    stdUniversityVerified,
   } = data;
 
   return (
     <View>
-      {!!id && (
+      {!!stdId && (
         <TouchableOpacity
           onPress={() => {
-            updateVerifiedStatusMakerStudent(stdUniversityCode, id, verified);
+            updateVerifiedStatusMakerStudent(
+              stdUniversityCode,
+              stdId,
+              stdUniversityVerified
+            );
           }}
         >
           <UniversityStudentCardInfo>
             <Info>
               <Spacer position="bottom" size="medium">
-                <Text variant="label">Student Name: {name}</Text>
+                <Text variant="label">Student Name: {stdName}</Text>
               </Spacer>
               <Spacer position="bottom" size="medium">
-                <Text variant="label">Registaion Number: {regNo}</Text>
+                <Text variant="label">Registaion Number: {stdRegNo}</Text>
               </Spacer>
               <Spacer position="bottom" size="medium">
-                <Text variant="label">Verifed: {verified ? "Yes" : "No"}</Text>
+                <Text variant="label">
+                  Verifed: {stdUniversityVerified ? "Yes" : "No"}
+                </Text>
               </Spacer>
             </Info>
           </UniversityStudentCardInfo>

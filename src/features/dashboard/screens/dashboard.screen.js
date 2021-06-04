@@ -96,7 +96,10 @@ export const DashboardScreen = ({ navigation }) => {
             expanded={universityExpanded}
             onPress={() => setUniversityExpanded(!universityExpanded)}
           >
-            <List.Item title="Create University" />
+            <List.Item
+              title="Create University"
+              onPress={() => navigation.navigate("UniversityInfoScreen")}
+            />
             <List.Item
               title="Join University"
               onPress={() => {

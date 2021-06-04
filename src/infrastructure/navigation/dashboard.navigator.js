@@ -21,6 +21,11 @@ import { BusCameraScreen } from "../../features/bus/screens/camera-bus.screen";
 import { BusJoinedCameraScreen } from "../../features/dashboard/screens/camera-bus-join.screen";
 import { BusDetailsScreen } from "../../features/bus/screens/bus-details.screen";
 
+import { UniversityInfoScreen } from "../../features/university/screens/university-info.screen";
+import { UniversityCameraScreen } from "../../features/university/screens/camera-university.screen";
+import { UniversityJoinedCameraScreen } from "../../features/dashboard/screens/camera-university-join.screeen";
+import { UniversityDetailsScreen } from "../../features/university/screens/university-details.screen";
+
 const DashboardStack = createStackNavigator();
 
 export const DashboardNavigator = () => {
@@ -63,6 +68,13 @@ export const DashboardNavigator = () => {
       />
       <DashboardStack.Screen
         options={{
+          title: "Enter Univeristy Info",
+        }}
+        name="UniversityInfoScreen"
+        component={UniversityInfoScreen}
+      />
+      <DashboardStack.Screen
+        options={{
           title: "Verify Face",
         }}
         name="ClassCameraScreen"
@@ -81,6 +93,13 @@ export const DashboardNavigator = () => {
         }}
         name="BusCameraScreen"
         component={BusCameraScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "Verify Face",
+        }}
+        name="UniversityCameraScreen"
+        component={UniversityCameraScreen}
       />
       <DashboardStack.Screen
         options={{
@@ -105,6 +124,13 @@ export const DashboardNavigator = () => {
       />
       <DashboardStack.Screen
         options={{
+          title: "Verify Face",
+        }}
+        name="UniversityJoinedCameraScreen"
+        component={UniversityJoinedCameraScreen}
+      />
+      <DashboardStack.Screen
+        options={{
           title: "Event Details",
         }}
         name="EventDetailsScreen"
@@ -116,6 +142,13 @@ export const DashboardNavigator = () => {
         }}
         name="BusDetailsScreen"
         component={BusDetailsScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "University Details",
+        }}
+        name="UniversityDetailsScreen"
+        component={UniversityDetailsScreen}
       />
       <DashboardStack.Screen
         options={{

@@ -7,7 +7,7 @@ import { Text } from "../../../components/typography/text.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
 
 import { UniversityStudentCard } from "../components/university-student-card.component";
-import { ExportDataButton } from "../components/export-data-button.component";
+import { ExportDataButton } from "../components/export-university-data-button.component";
 
 import { UniversityContext } from "../../../services/universities/universities.context";
 import { Info } from "../../dashboard/components/card.component.styles";
@@ -98,11 +98,13 @@ export const UniversityDetailsScreen = ({ navigation, route }) => {
           <VerifyUniversityButton
             mode="contained"
             onPress={() => {
-              navigation.navigate("UniversityCameraScreen", { universityStudentsDetails });
+              navigation.navigate("UniversityCameraScreen", {
+                universityStudentsDetails,
+              });
             }}
           >
             Verify
-          </VerifyEventButton>
+          </VerifyUniversityButton>
         </UniversityDetailsCard>
         <ListView>
           <Title variant="label">Students in University</Title>
@@ -121,6 +123,14 @@ export const UniversityDetailsScreen = ({ navigation, route }) => {
               </Spacer>
             );
           }}
+          keyExtractor={(item, index) => {
+            return "item" + index;
+            // if (!isEmpty(classData)) {
+            //   return item.classCode;
+            // } else if (!isEmpty(studentData)) {
+            //   return item.id;
+            // }
+          }}
         />
       </View>
       <ButtonView>
@@ -134,7 +144,9 @@ export const UniversityDetailsScreen = ({ navigation, route }) => {
         >
           End University
         </EndUniversityButton>
-        <ExportDataButton studentsDetails={universityStudentsDetails} />
+        <ExportDataButton
+          universityStudentsDetails={universityStudentsDetails}
+        />
       </ButtonView>
     </>
   );

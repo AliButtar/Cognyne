@@ -7,7 +7,7 @@ import {
   CodeInput,
   UniversityView,
   TwoElementsRow,
-} from "../components/class-info.styles";
+} from "../components/university-info.styles";
 
 export const UniversityInfoScreen = ({ navigation }) => {
   const [universityName, setUniversityName] = useState("");

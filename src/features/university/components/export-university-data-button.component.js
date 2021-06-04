@@ -11,7 +11,7 @@ const ExportButton = styled(Button)`
   margin-right: ${(props) => props.theme.space[1]};
 `;
 
-export const ExportDataButton = ({ UniversityStudentsDetails }) => {
+export const ExportDataButton = ({ universityStudentsDetails }) => {
   const arrtoJSON = async (uniStdDetails) => {
     var json = uniStdDetails;
     var fields = Object.keys(json[0]);
@@ -55,7 +55,7 @@ export const ExportDataButton = ({ UniversityStudentsDetails }) => {
       icon="account-arrow-left-outline"
       mode="contained"
       onPress={() => {
-        arrtoJSON(UniversityStudentsDetails);
+        arrtoJSON(universityStudentsDetails);
       }}
     >
       Export Data

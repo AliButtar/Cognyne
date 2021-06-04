@@ -11,6 +11,7 @@ import { SettingsNavigator } from "./settings.navigator";
 import { ClassContextProvider } from "../../services/classes/classes.context";
 import { EventContextProvider } from "../../services/events/events.context";
 import { BusContextProvider } from "../../services/busses/busses.context";
+import { UniversityContextProvider } from "../../services/universities/universities.context";
 
 import { LocationContextProvider } from "../../features/maps/services/location/location.context";
 import { BuildingsContextProvider } from "../../features/maps/services/buildings/buildings.context";
@@ -53,30 +54,38 @@ const createScreenOptions = ({ route }) => {
 
 export const AppNavigator = () => {
   return (
-    <BusContextProvider>
-      <EventContextProvider>
-        <ClassContextProvider>
-          <LocationContextProvider>
-            <BuildingsContextProvider>
-              <CounsellorContextProvider>
-                <Tab.Navigator
-                  screenOptions={createScreenOptions}
-                  tabBarOptions={{
-                    activeTintColor: "blue",
-                    inactiveTintColor: "gray",
-                    keyboardHidesTabBar: true,
-                  }}
-                >
-                  <Tab.Screen name="Dashboard" component={DashboardNavigator} />
-                  <Tab.Screen name="Maps" component={MapsScreen} />
-                  <Tab.Screen name="Counsellor" component={CounsellorScreen} />
-                  <Tab.Screen name="Settings" component={SettingsNavigator} />
-                </Tab.Navigator>
-              </CounsellorContextProvider>
-            </BuildingsContextProvider>
-          </LocationContextProvider>
-        </ClassContextProvider>
-      </EventContextProvider>
-    </BusContextProvider>
+    <UniversityContextProvider>
+      <BusContextProvider>
+        <EventContextProvider>
+          <ClassContextProvider>
+            <LocationContextProvider>
+              <BuildingsContextProvider>
+                <CounsellorContextProvider>
+                  <Tab.Navigator
+                    screenOptions={createScreenOptions}
+                    tabBarOptions={{
+                      activeTintColor: "blue",
+                      inactiveTintColor: "gray",
+                      keyboardHidesTabBar: true,
+                    }}
+                  >
+                    <Tab.Screen
+                      name="Dashboard"
+                      component={DashboardNavigator}
+                    />
+                    <Tab.Screen name="Maps" component={MapsScreen} />
+                    <Tab.Screen
+                      name="Counsellor"
+                      component={CounsellorScreen}
+                    />
+                    <Tab.Screen name="Settings" component={SettingsNavigator} />
+                  </Tab.Navigator>
+                </CounsellorContextProvider>
+              </BuildingsContextProvider>
+            </LocationContextProvider>
+          </ClassContextProvider>
+        </EventContextProvider>
+      </BusContextProvider>
+    </UniversityContextProvider>
   );
 };

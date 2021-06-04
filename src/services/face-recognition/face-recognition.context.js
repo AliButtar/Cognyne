@@ -22,7 +22,7 @@ export const FaceVerificationContextProvider = ({ children }) => {
       await tf.ready();
 
       const modelJson =
-        "http://192.168.10.14:8080/exported-modelstfjs/model.json";
+        "http://192.168.1.165:8080/exported-modelstfjs/model.json";
 
       await tf.loadGraphModel(modelJson).then((model) => {
         console.log("tf ready");
