@@ -33,6 +33,13 @@ const EndEventButton = styled(Button)`
   margin-bottom: ${(props) => props.theme.space[1]};
 `;
 
+const VerifyEventButton = styled(Button)`
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 30%;
+`;
+
 const ListView = styled.View`
   background-color: ${(props) => props.theme.colors.bg.secondary};
   align-items: center;
@@ -51,7 +58,8 @@ const EventDetailsCard = styled(Card)`
 `;
 
 export const EventDetailsScreen = ({ navigation, route }) => {
-  const { eventCode, eventName, eventMaker } = route.params;
+  const { eventCode, eventDate, eventTime, eventName, eventMaker } =
+    route.params;
 
   const {
     getParticipantsDetails,
@@ -82,11 +90,25 @@ export const EventDetailsScreen = ({ navigation, route }) => {
               <Text variant="label">Organizer: {eventMaker}</Text>
             </Spacer>
             <Spacer position="bottom" size="medium">
+              <Text variant="label">{"Event Date: " + eventDate}</Text>
+            </Spacer>
+            <Spacer position="bottom" size="medium">
+              <Text variant="label">{"Event Time: " + eventTime}</Text>
+            </Spacer>
+            <Spacer position="bottom" size="medium">
               <Text variant="label">
                 Total Participants: {noOfParticipants}
               </Text>
             </Spacer>
           </Info>
+          <VerifyEventButton
+            mode="contained"
+            onPress={() => {
+              navigation.navigate("EventCameraScreen", { participantsDetails });
+            }}
+          >
+            Verify
+          </VerifyEventButton>
         </EventDetailsCard>
         <ListView>
           <Title variant="label">Event Atendees</Title>

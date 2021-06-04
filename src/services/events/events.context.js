@@ -17,7 +17,13 @@ export const EventContextProvider = ({ children }) => {
   const [participantData, setParticipantData] = useState({});
   const [error, setError] = useState(null);
 
-  const onEventCreate = (eventName, eventCode, photoURI) => {
+  const onEventCreate = (
+    eventName,
+    eventCode,
+    eventDate,
+    eventTime,
+    photoURI
+  ) => {
     // Write logic to not let the same user create two events
     const eventRef = firebase
       .firestore()
@@ -29,6 +35,8 @@ export const EventContextProvider = ({ children }) => {
     const eventDataLocal = {
       eventName: eventName,
       eventCode: eventCode,
+      eventDate: eventDate,
+      eventTime: eventTime,
       eventMaker: data.fullName,
       eventMakerUID: user.uid,
       totalParticipants: 0,
@@ -97,6 +105,8 @@ export const EventContextProvider = ({ children }) => {
         ptcRegNo: data.regNo,
         ptcEventName: joinedEvent.eventName,
         ptcEventCode: joinedEvent.eventCode,
+        ptcEventDate: joinedEvent.eventDate,
+        ptcEventTime: joinedEvent.eventTime,
         ptcVerified: false,
         ptcEventMaker: joinedEvent.eventMaker,
       };
@@ -130,11 +140,11 @@ export const EventContextProvider = ({ children }) => {
     await makerEventRef.doc(eventCode).delete();
 
     participantsDetails.forEach(async (ptc) => {
-      console.log(ptc.id);
+      console.log(ptc.ptcId);
       const participantEventRef = await firebase
         .firestore()
         .collection("ActiveTasks-Joined")
-        .doc(ptc.id)
+        .doc(ptc.ptcId)
         .collection("Event");
 
       const participantEventRef2 = await firebase
@@ -143,7 +153,7 @@ export const EventContextProvider = ({ children }) => {
         .doc(eventCode)
         .collection("Participants");
 
-      await participantEventRef2.doc(ptc.id).delete();
+      await participantEventRef2.doc(ptc.ptcId).delete();
       await participantEventRef.doc(eventCode).delete();
     });
 

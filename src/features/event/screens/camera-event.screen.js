@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button, IconButton } from "react-native-paper";
 import Svg, { Rect } from "react-native-svg";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 
 import { Text } from "../../../components/typography/text.component";
 import { colors } from "../../../infrastructure/theme/colors";
@@ -45,13 +45,15 @@ export const EventCameraScreen = ({ navigation, route }) => {
   const { user } = useContext(AuthenticationContext);
   const { onEventCreate, error } = useContext(EventContext);
 
-  const { eventName, code } = route.params;
+  const { eventName, eDate, eTime, code, participantsDetails } = route.params;
 
   const [faces, setFaces] = useState({ faces: [] });
 
-  const { compareFaceEncodingWithUser, getFaceEncoding } = useContext(
-    FaceVerificationContext
-  );
+  const {
+    compareFaceEncodingWithUser,
+    getFaceEncoding,
+    compareFaceEncodingWithJoinedPeople,
+  } = useContext(FaceVerificationContext);
 
   const snap = async () => {
     if (cameraRef) {
@@ -59,15 +61,27 @@ export const EventCameraScreen = ({ navigation, route }) => {
         base64: false,
       });
       setPhoto(picture);
-
       const faceEncoding = await getFaceEncoding(faces, picture);
-      const flag = await compareFaceEncodingWithUser(user, faceEncoding);
 
-      if (flag) {
-        onEventCreate(eventName, code);
-        navigation.navigate("DashboardScreen");
+      if (!participantsDetails) {
+        const flag = await compareFaceEncodingWithUser(user, faceEncoding);
+
+        if (flag) {
+          onEventCreate(eventName, code, eDate, eTime);
+          navigation.navigate("DashboardScreen");
+        } else {
+          navigation.goBack();
+        }
       } else {
-        navigation.goBack();
+        const flag2 = await compareFaceEncodingWithJoinedPeople(
+          faceEncoding,
+          participantsDetails
+        );
+        if (flag2) {
+          Alert.alert("Face Recognition", "Verified");
+        } else {
+          Alert.alert("Face Recognition", "Not Verified");
+        }
       }
     }
   };

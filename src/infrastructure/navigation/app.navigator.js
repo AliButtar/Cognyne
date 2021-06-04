@@ -62,6 +62,7 @@ export const AppNavigator = () => {
                 tabBarOptions={{
                   activeTintColor: "blue",
                   inactiveTintColor: "gray",
+                  keyboardHidesTabBar: true,
                 }}
               >
                 <Tab.Screen name="Dashboard" component={DashboardNavigator} />

@@ -22,7 +22,7 @@ export const FaceVerificationContextProvider = ({ children }) => {
       await tf.ready();
 
       const modelJson =
-        "http://192.168.8.102:8080/exported-modelstfjs/model.json";
+        "http://192.168.10.14:8080/exported-modelstfjs/model.json";
 
       await tf.loadGraphModel(modelJson).then((model) => {
         console.log("tf ready");
@@ -164,6 +164,31 @@ export const FaceVerificationContextProvider = ({ children }) => {
     return flag;
   };
 
+  const compareFaceEncodingWithJoinedPeople = async (
+    faceEncoding,
+    participantsDetails
+  ) => {
+    const flag = await compareFaceEncodingWithAll(faceEncoding);
+    var flag2 = false;
+    var BreakException = {};
+
+    try {
+      if (flag.flag) {
+        await participantsDetails.forEach((ptc) => {
+          if (ptc.ptcId === flag.userData.id) {
+            flag2 = true;
+            throw BreakException;
+          }
+        });
+      }
+    } catch (e) {
+      if (e !== BreakException) {
+        throw e;
+      }
+    }
+    return flag2;
+  };
+
   return (
     <FaceVerificationContext.Provider
       value={{
@@ -172,6 +197,7 @@ export const FaceVerificationContextProvider = ({ children }) => {
         getFaceEncoding,
         compareFaceEncodingWithUser,
         compareFaceEncodingWithAll,
+        compareFaceEncodingWithJoinedPeople,
       }}
     >
       {children}

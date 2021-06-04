@@ -48,6 +48,8 @@ export const ActiveTasksInfoCard = ({
 
     eventName,
     eventCode,
+    eventDate,
+    eventTime,
     eventMaker,
     eventMakerUID,
     totalParticipants,
@@ -56,6 +58,8 @@ export const ActiveTasksInfoCard = ({
     ptcName,
     ptcRegNo,
     ptcEventName,
+    ptcEventDate,
+    ptcEventTime,
     ptcEventCode,
     ptcVerified,
     ptcEventMaker,
@@ -181,6 +185,12 @@ export const ActiveTasksInfoCard = ({
               <Spacer position="bottom" size="medium">
                 <Text variant="label">{"Event Code: " + eventCode}</Text>
               </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Event Date: " + eventDate}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Event Time: " + eventTime}</Text>
+              </Spacer>
               <Text variant="label">
                 {"Number of Particpicants: " + noOfParticipants}
               </Text>
@@ -195,6 +205,8 @@ export const ActiveTasksInfoCard = ({
                   eventCode,
                   eventName,
                   eventMaker,
+                  eventDate,
+                  eventTime,
                 });
               }}
             >
@@ -217,6 +229,12 @@ export const ActiveTasksInfoCard = ({
               </Spacer>
               <Spacer position="bottom" size="medium">
                 <Text variant="label">{"Event Maker: " + ptcEventMaker}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Event Date: " + ptcEventDate}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Event Time: " + ptcEventTime}</Text>
               </Spacer>
               <Text variant="label">
                 Verified: {participantVerifiedStatus ? "Yes" : "No"}
