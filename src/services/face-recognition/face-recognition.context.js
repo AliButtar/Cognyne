@@ -175,7 +175,15 @@ export const FaceVerificationContextProvider = ({ children }) => {
     try {
       if (flag.flag) {
         await participantsDetails.forEach((ptc) => {
+          if (ptc.bmId === flag.userData.id) {
+            flag2 = true;
+            throw BreakException;
+          }
           if (ptc.ptcId === flag.userData.id) {
+            flag2 = true;
+            throw BreakException;
+          }
+          if (ptc.stdId === flag.userData.id) {
             flag2 = true;
             throw BreakException;
           }

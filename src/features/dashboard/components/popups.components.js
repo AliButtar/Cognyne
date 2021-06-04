@@ -9,6 +9,7 @@ import { Spacer } from "../../../components/spacer/spacer.component";
 
 import { ClassContext } from "../../../services/classes/classes.context";
 import { EventContext } from "../../../services/events/events.context";
+import { BusContext } from "../../../services/busses/busses.context";
 
 const Popup = styled(Modal).attrs({
   backdropOpacity: Platform.OS === "android" ? 0.5 : 0.7,
@@ -36,6 +37,7 @@ export const Popups = ({ modalVisible, setModalVisible, type }) => {
 
   const { joinClass } = useContext(ClassContext);
   const { joinEvent } = useContext(EventContext);
+  const { joinBus } = useContext(BusContext);
 
   return (
     <ModalView>
@@ -59,6 +61,8 @@ export const Popups = ({ modalVisible, setModalVisible, type }) => {
                 joinClass(code);
               } else if (type === "Event") {
                 joinEvent(code);
+              } else if (type === "Bus") {
+                joinBus(code);
               }
               setModalVisible(!modalVisible);
               setCode("");
