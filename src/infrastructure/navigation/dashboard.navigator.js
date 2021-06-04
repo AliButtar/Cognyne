@@ -16,6 +16,11 @@ import { EventCameraScreen } from "../../features/event/screens/camera-event.scr
 import { EventJoinedCameraScreen } from "../../features/dashboard/screens/camera-event-join.screen";
 import { EventDetailsScreen } from "../../features/event/screens/event-details.screen";
 
+import { BusInfoScreen } from "../../features/bus/screens/bus-info.screen";
+import { BusCameraScreen } from "../../features/bus/screens/camera-bus.screen";
+import { BusJoinedCameraScreen } from "../../features/dashboard/screens/camera-bus-join.screen";
+import { BusDetailsScreen } from "../../features/bus/screens/bus-details.screen";
+
 const DashboardStack = createStackNavigator();
 
 export const DashboardNavigator = () => {
@@ -51,6 +56,13 @@ export const DashboardNavigator = () => {
       />
       <DashboardStack.Screen
         options={{
+          title: "Enter Bus Info",
+        }}
+        name="BusInfoScreen"
+        component={BusInfoScreen}
+      />
+      <DashboardStack.Screen
+        options={{
           title: "Verify Face",
         }}
         name="ClassCameraScreen"
@@ -62,6 +74,13 @@ export const DashboardNavigator = () => {
         }}
         name="EventCameraScreen"
         component={EventCameraScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "Verify Face",
+        }}
+        name="BusCameraScreen"
+        component={BusCameraScreen}
       />
       <DashboardStack.Screen
         options={{
@@ -79,10 +98,24 @@ export const DashboardNavigator = () => {
       />
       <DashboardStack.Screen
         options={{
+          title: "Verify Face",
+        }}
+        name="BusJoinedCameraScreen"
+        component={BusJoinedCameraScreen}
+      />
+      <DashboardStack.Screen
+        options={{
           title: "Event Details",
         }}
         name="EventDetailsScreen"
         component={EventDetailsScreen}
+      />
+      <DashboardStack.Screen
+        options={{
+          title: "Bus Details",
+        }}
+        name="BusDetailsScreen"
+        component={BusDetailsScreen}
       />
       <DashboardStack.Screen
         options={{

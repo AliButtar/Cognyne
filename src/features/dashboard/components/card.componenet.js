@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { Button } from "react-native-paper";
 
 import { Spacer } from "../../../components/spacer/spacer.component";
@@ -20,6 +20,7 @@ import {
 export const ActiveTasksInfoCard = ({
   data = {},
   navigation,
+
   getStudentsInClass,
   leaveClass,
   getVerifiedStatus,
@@ -31,6 +32,12 @@ export const ActiveTasksInfoCard = ({
   getParticipantVerifiedStatus,
   noOfParticipants,
   participantVerifiedStatus,
+
+  getBusMembersInBus,
+  leaveBus,
+  getBusMemberVerifiedStatus,
+  noOfBusMembers,
+  busMemberVerifiedStatus,
 }) => {
   const {
     className,
@@ -63,6 +70,24 @@ export const ActiveTasksInfoCard = ({
     ptcEventCode,
     ptcVerified,
     ptcEventMaker,
+
+    busName,
+    busCode,
+    busDate,
+    busTime,
+    busMaker,
+    busMakerUID,
+    totalBusMembers,
+
+    bmId,
+    bmName,
+    bmRegNo,
+    bmBusName,
+    bmBusCode,
+    bmBusDate,
+    bmBusTime,
+    bmVerified,
+    bmBusMaker,
   } = data;
 
   // console.log(data);
@@ -90,6 +115,18 @@ export const ActiveTasksInfoCard = ({
       getParticipantVerifiedStatus(ptcEventCode, ptcId);
     }
   }, [participantVerifiedStatus]);
+
+  useEffect(() => {
+    if (busName) {
+      getBusMembersInBus(busCode);
+    }
+  }, [noOfBusMembers]);
+
+  useEffect(() => {
+    if (bmBusName) {
+      getBusMemberVerifiedStatus(bmBusCode, bmId);
+    }
+  }, [busMemberVerifiedStatus]);
 
   return (
     <>
@@ -259,6 +296,100 @@ export const ActiveTasksInfoCard = ({
                 navigation.navigate("EventJoinedCameraScreen", {
                   ptcEventCode,
                   ptcId,
+                })
+              }
+            >
+              Verify
+            </Button>
+          </>
+        )}
+
+        {busName && (
+          <>
+            <Info>
+              <Text variant="body">{"Created Bus:"}</Text>
+            </Info>
+            <Section>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Bus Name: " + busName}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Bus Code: " + busCode}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Bus Date: " + busDate}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Bus Time: " + busTime}</Text>
+              </Spacer>
+              <Text variant="label">
+                {"Number of Particpicants: " + noOfBusMembers}
+              </Text>
+              <Spacer position="bottom" size="medium" />
+            </Section>
+
+            <Button
+              icon="account-details"
+              mode="contained"
+              onPress={() => {
+                navigation.navigate("BusDetailsScreen", {
+                  busCode,
+                  busName,
+                  busMaker,
+                  busDate,
+                  busTime,
+                });
+              }}
+            >
+              Details
+            </Button>
+          </>
+        )}
+
+        {bmBusName && (
+          <>
+            <Info>
+              <Text variant="body">{"Joined Bus:"}</Text>
+            </Info>
+            <Section>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Bus Name: " + bmBusName}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Bus Code: " + bmBusCode}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Bus Maker: " + bmBusMaker}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Bus Date: " + bmBusDate}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">{"Bus Time: " + bmBusTime}</Text>
+              </Spacer>
+              <Text variant="label">
+                Verified: {busMemberVerifiedStatus ? "Yes" : "No"}
+              </Text>
+              <Spacer position="bottom" size="medium" />
+            </Section>
+
+            <LeaveButton
+              icon="account-arrow-left-outline"
+              mode="contained"
+              onPress={() => {
+                leaveBus(bmBusCode);
+              }}
+            >
+              Leave
+            </LeaveButton>
+
+            <Button
+              icon="face-recognition"
+              mode="contained"
+              onPress={() =>
+                navigation.navigate("BusJoinedCameraScreen", {
+                  bmBusCode,
+                  bmId,
                 })
               }
             >

@@ -9,6 +9,7 @@ import { Spacer } from "../../../components/spacer/spacer.component";
 import { ClassContext } from "../../../services/classes/classes.context";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 import { EventContext } from "../../../services/events/events.context";
+import { BusContext } from "../../../services/busses/busses.context";
 
 //import theme for margin
 const CurrentTasksSection = styled.View`
@@ -69,6 +70,19 @@ export const CurrentTasks = ({ navigation }) => {
     endEvent,
   } = useContext(EventContext);
 
+  const {
+    busData,
+    busMemberData,
+    getActiveTasksBussesCreated,
+    getActiveTasksBussesJoined,
+    getBusMembersInBus,
+    leaveBus,
+    getBusMemberVerifiedStatus,
+    noOfBusMembers,
+    busMemberVerifiedStatus,
+    endBus,
+  } = useContext(BusContext);
+
   const [refresh, setRefresh] = useState(false);
 
   // console.log("--");
@@ -77,9 +91,11 @@ export const CurrentTasks = ({ navigation }) => {
   useEffect(() => {
     getActiveTasksClassesCreated();
     getActiveTasksEventsCreated();
+    getActiveTasksBussesCreated();
 
     getActiveTasksClassesJoined();
     getActiveTasksEventsJoined();
+    getActiveTasksBussesJoined();
 
     setRefresh(false);
   }, [refresh]);
@@ -95,14 +111,23 @@ export const CurrentTasks = ({ navigation }) => {
 
   // const { stdClassName } = studentData;
   // const { className } = classData;
-  const totalData = [classData, studentData, eventData, participantData];
+  const totalData = [
+    classData,
+    studentData,
+    eventData,
+    participantData,
+    busData,
+    busMemberData,
+  ];
   // console.log(totalData);
   return (
     <CurrentTasksSection>
       {isEmpty(classData) &&
       isEmpty(studentData) &&
       isEmpty(eventData) &&
-      isEmpty(participantData) ? (
+      isEmpty(participantData) &&
+      isEmpty(busData) &&
+      isEmpty(busMemberData) ? (
         <EmptyTasksText variant="label">
           You Currently Don't Have Any Tasks
         </EmptyTasksText>
@@ -132,6 +157,12 @@ export const CurrentTasks = ({ navigation }) => {
                     noOfParticipants={noOfParticipants}
                     participantVerifiedStatus={participantVerifiedStatus}
                     endEvent={endEvent}
+                    getBusMembersInBus={getBusMembersInBus}
+                    leaveBus={leaveBus}
+                    getBusMemberVerifiedStatus={getBusMemberVerifiedStatus}
+                    noOfBusMembers={noOfBusMembers}
+                    busMemberVerifiedStatus={busMemberVerifiedStatus}
+                    endBus={endBus}
                   />
                 </Spacer>
               );

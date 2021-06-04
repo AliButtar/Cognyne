@@ -73,7 +73,10 @@ export const DashboardScreen = ({ navigation }) => {
             expanded={busExpanded}
             onPress={() => setBusExpanded(!busExpanded)}
           >
-            <List.Item title="Create Bus" />
+            <List.Item
+              title="Create Bus"
+              onPress={() => navigation.navigate("BusInfoScreen")}
+            />
             <List.Item
               title="Join Bus"
               onPress={() => {
