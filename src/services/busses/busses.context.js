@@ -16,7 +16,7 @@ export const BusContextProvider = ({ children }) => {
   const [busMemberData, setBusMemberData] = useState({});
   const [error, setError] = useState(null);
 
-  const onBusCreate = (busName, busCode, busDate, busTime, photoURI) => {
+  const onBusCreate = (busName, busCode, busTime, startPoint, endPoint) => {
     // Write logic to not let the same user create two buss
     const busRef = firebase
       .firestore()
@@ -28,8 +28,9 @@ export const BusContextProvider = ({ children }) => {
     const busDataLocal = {
       busName: busName,
       busCode: busCode,
-      busDate: busDate,
       busTime: busTime,
+      startPoint: startPoint,
+      endPoint: endPoint,
       busMaker: data.fullName,
       busMakerUID: user.uid,
       totalBusMembers: 0,
@@ -95,8 +96,9 @@ export const BusContextProvider = ({ children }) => {
         bmRegNo: data.regNo,
         bmBusName: joinedBus.busName,
         bmBusCode: joinedBus.busCode,
-        bmBusDate: joinedBus.busDate,
         bmBusTime: joinedBus.busTime,
+        bmStartPoint: joinedBus.startPoint,
+        bmEndPoint: joinedBus.endPoint,
         bmVerified: false,
         bmBusMaker: joinedBus.busMaker,
       };

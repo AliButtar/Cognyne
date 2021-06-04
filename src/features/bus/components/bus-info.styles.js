@@ -26,7 +26,14 @@ export const CreateBusButton = styled(Button).attrs({
 
 export const BusNameInput = styled(TextInput)`
   width: 90%;
-  margin: ${(props) => props.theme.space[3]};
+  margin-left: ${(props) => props.theme.space[3]};
+  margin-bottom: ${(props) => props.theme.space[2]};
+`;
+
+export const BusRouteInput = styled(TextInput)`
+  width: 43%;
+  margin-bottom: ${(props) => props.theme.space[2]};
+  margin-left: ${(props) => props.theme.space[3]};
 `;
 
 export const CodeInput = styled(TextInput)`

@@ -79,7 +79,8 @@ export const ActiveTasksInfoCard = ({
 
     busName,
     busCode,
-    busDate,
+    startPoint,
+    endPoint,
     busTime,
     busMaker,
     busMakerUID,
@@ -89,6 +90,8 @@ export const ActiveTasksInfoCard = ({
     bmName,
     bmRegNo,
     bmBusName,
+    bmStartPoint,
+    bmEndPoint,
     bmBusCode,
     bmBusDate,
     bmBusTime,
@@ -349,7 +352,10 @@ export const ActiveTasksInfoCard = ({
                 <Text variant="label">{"Bus Code: " + busCode}</Text>
               </Spacer>
               <Spacer position="bottom" size="medium">
-                <Text variant="label">{"Bus Date: " + busDate}</Text>
+                <Text variant="label">Bus Start Point: {startPoint}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">Bus End Point: {endPoint}</Text>
               </Spacer>
               <Spacer position="bottom" size="medium">
                 <Text variant="label">{"Bus Time: " + busTime}</Text>
@@ -368,7 +374,8 @@ export const ActiveTasksInfoCard = ({
                   busCode,
                   busName,
                   busMaker,
-                  busDate,
+                  startPoint,
+                  endPoint,
                   busTime,
                 });
               }}
@@ -394,7 +401,10 @@ export const ActiveTasksInfoCard = ({
                 <Text variant="label">{"Bus Maker: " + bmBusMaker}</Text>
               </Spacer>
               <Spacer position="bottom" size="medium">
-                <Text variant="label">{"Bus Date: " + bmBusDate}</Text>
+                <Text variant="label">Bus Start Point: {bmStartPoint}</Text>
+              </Spacer>
+              <Spacer position="bottom" size="medium">
+                <Text variant="label">Bus End Point: {bmEndPoint}</Text>
               </Spacer>
               <Spacer position="bottom" size="medium">
                 <Text variant="label">{"Bus Time: " + bmBusTime}</Text>
@@ -492,7 +502,7 @@ export const ActiveTasksInfoCard = ({
                 </Text>
               </Spacer>
               <Text variant="label">
-                Verified: {universityStdVerifiedStatus ? "Yes" : "No"}
+                Fee Submitted: {universityStdVerifiedStatus ? "Yes" : "No"}
               </Text>
               <Spacer position="bottom" size="medium" />
             </Section>
@@ -506,19 +516,6 @@ export const ActiveTasksInfoCard = ({
             >
               Leave
             </LeaveButton>
-
-            <Button
-              icon="face-recognition"
-              mode="contained"
-              onPress={() =>
-                navigation.navigate("UniversityJoinedCameraScreen", {
-                  stdUniversityCode,
-                  stdId,
-                })
-              }
-            >
-              Verify
-            </Button>
           </>
         )}
       </ActiveTaskCard>

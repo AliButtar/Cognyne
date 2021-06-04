@@ -45,7 +45,8 @@ export const BusCameraScreen = ({ navigation, route }) => {
   const { user } = useContext(AuthenticationContext);
   const { onBusCreate, error } = useContext(BusContext);
 
-  const { busName, eDate, eTime, code, busMembersDetails } = route.params;
+  const { busName, code, eTime, startPoint, endPoint, busMembersDetails } =
+    route.params;
 
   const [faces, setFaces] = useState({ faces: [] });
 
@@ -67,7 +68,7 @@ export const BusCameraScreen = ({ navigation, route }) => {
         const flag = await compareFaceEncodingWithUser(user, faceEncoding);
 
         if (flag) {
-          onBusCreate(busName, code, eDate, eTime);
+          onBusCreate(busName, code, eTime, startPoint, endPoint);
           navigation.navigate("DashboardScreen");
         } else {
           navigation.goBack();

@@ -19,9 +19,9 @@ export const BusMemberCard = ({
   const {
     bmId,
     bmName,
-    bmRegNo,
     bmBusCode,
-    bmBusMaker,
+    bmStartPoint,
+    bmEndPoint,
     bmBusName,
     bmVerified,
   } = data;

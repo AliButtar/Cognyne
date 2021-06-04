@@ -11,6 +11,7 @@ import {
   TwoElementsRow,
   TimeDateInput,
   Icon,
+  BusRouteInput,
 } from "../components/bus-info.styles";
 
 export const BusInfoScreen = ({ navigation }) => {
@@ -18,6 +19,8 @@ export const BusInfoScreen = ({ navigation }) => {
   const [busName, setBusName] = useState("");
   const [busDate, setBusDate] = useState(today);
   const [busTime, setBusTime] = useState(today);
+  const [startPoint, setStartPoint] = useState("");
+  const [endPoint, setEndPoint] = useState("");
 
   const [showDate, setShowDate] = useState(false);
   const [showTime, setShowTime] = useState(false);
@@ -55,27 +58,15 @@ export const BusInfoScreen = ({ navigation }) => {
         onChangeText={(text) => setBusName(text)}
       />
       <TwoElementsRow>
-        {showDate && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={busDate}
-            mode="date"
-            is24Hour={true}
-            display="default"
-            onChange={onChangeDate}
-          />
-        )}
-        <TimeDateInput
-          label="Enter Bus Date"
-          value={busDate.toDateString()}
-          onChangeText={(text) => setBusDate(text)}
+        <BusRouteInput
+          label="Enter Starting Point"
+          value={startPoint}
+          onChangeText={(text) => setStartPoint(text)}
         />
-        <Icon
-          icon="calendar-multiselect"
-          mode="contained"
-          onPress={() => {
-            setShowDate(true);
-          }}
+        <BusRouteInput
+          label="Enter Ending Point"
+          value={endPoint}
+          onChangeText={(text) => setEndPoint(text)}
         />
       </TwoElementsRow>
       <TwoElementsRow>
@@ -118,13 +109,13 @@ export const BusInfoScreen = ({ navigation }) => {
       <CreateBusButton
         mode="contained"
         onPress={() => {
-          const eDate = busDate.toDateString();
           const eTime = busTime.toTimeString().slice(0, -18);
           navigation.navigate("BusCameraScreen", {
             busName,
             code,
-            eDate,
             eTime,
+            startPoint,
+            endPoint,
           });
         }}
       >

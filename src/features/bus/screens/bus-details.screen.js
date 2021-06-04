@@ -58,7 +58,8 @@ const BusDetailsCard = styled(Card)`
 `;
 
 export const BusDetailsScreen = ({ navigation, route }) => {
-  const { busCode, busDate, busTime, busName, busMaker } = route.params;
+  const { busCode, startPoint, endPoint, busTime, busName, busMaker } =
+    route.params;
 
   const {
     getBusMembersDetails,
@@ -89,7 +90,10 @@ export const BusDetailsScreen = ({ navigation, route }) => {
               <Text variant="label">Organizer: {busMaker}</Text>
             </Spacer>
             <Spacer position="bottom" size="medium">
-              <Text variant="label">{"Bus Date: " + busDate}</Text>
+              <Text variant="label">Bus Start Point: {startPoint}</Text>
+            </Spacer>
+            <Spacer position="bottom" size="medium">
+              <Text variant="label">Bus End Point: {endPoint}</Text>
             </Spacer>
             <Spacer position="bottom" size="medium">
               <Text variant="label">{"Bus Time: " + busTime}</Text>

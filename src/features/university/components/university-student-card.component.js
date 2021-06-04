@@ -48,7 +48,7 @@ export const UniversityStudentCard = ({
               </Spacer>
               <Spacer position="bottom" size="medium">
                 <Text variant="label">
-                  Verifed: {stdUniversityVerified ? "Yes" : "No"}
+                  Fee Submitted: {stdUniversityVerified ? "Yes" : "No"}
                 </Text>
               </Spacer>
             </Info>
