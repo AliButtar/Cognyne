@@ -41,11 +41,11 @@ export const FaceVerification = ({ faces, photo }) => {
         <FaceRectangle>
           <Rect
             key={faces.faces[0].faceID}
-            x={faces.faces[0].bounds.origin.x}
+            x={faces.faces[0].bounds.origin.x + 33}
             y={faces.faces[0].bounds.origin.y}
             height={faces.faces[0].bounds.size.height}
-            width={faces.faces[0].bounds.size.width}
-            stroke="white"
+            width={faces.faces[0].bounds.size.width - 65}
+            stroke="black"
             strokeWidth={2}
           />
         </FaceRectangle>

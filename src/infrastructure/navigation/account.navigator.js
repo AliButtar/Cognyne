@@ -10,14 +10,41 @@ import { LoginCameraScreen } from "../../features/account/screens/login-camera.s
 const Stack = createStackNavigator();
 
 export const AccountNavigator = () => (
-  <Stack.Navigator headerMode="none">
-    <Stack.Screen name="Main" component={AccountScreen} />
-    <Stack.Screen name="Login" component={LoginScreen} />
-    <Stack.Screen name="Register" component={RegisterScreen} />
+  <Stack.Navigator>
     <Stack.Screen
+      options={{
+        header: () => null,
+      }}
+      name="Main"
+      component={AccountScreen}
+    />
+    <Stack.Screen
+      options={{
+        header: () => null,
+      }}
+      name="Login"
+      component={LoginScreen}
+    />
+    <Stack.Screen
+      options={{
+        header: () => null,
+      }}
+      name="Register"
+      component={RegisterScreen}
+    />
+    <Stack.Screen
+      options={{
+        title: "Register Face",
+      }}
       name="RegisterCameraScreen"
       component={RegisterCameraScreen}
     />
-    <Stack.Screen name="LoginCameraScreen" component={LoginCameraScreen} />
+    <Stack.Screen
+      options={{
+        title: "Verify Face",
+      }}
+      name="LoginCameraScreen"
+      component={LoginCameraScreen}
+    />
   </Stack.Navigator>
 );

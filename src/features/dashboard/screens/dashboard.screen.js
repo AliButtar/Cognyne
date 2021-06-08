@@ -29,7 +29,6 @@ export const DashboardScreen = ({ navigation }) => {
             <List.Item
               title="Create Class"
               onPress={() => navigation.navigate("ClassInfoScreen")}
-              description="Add Description"
             />
             <List.Item
               title="Join Class"

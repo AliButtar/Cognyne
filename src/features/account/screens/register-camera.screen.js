@@ -53,7 +53,7 @@ export const RegisterCameraScreen = ({ navigation, route }) => {
   const snap = async () => {
     if (cameraRef) {
       const picture = await cameraRef.current.takePictureAsync({
-        base64: false,
+        base64: true,
       });
       setPhoto(picture);
 
