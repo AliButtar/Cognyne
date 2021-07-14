@@ -18,13 +18,12 @@ import { AuthenticationContextProvider } from "./src/services/authentication/aut
 import { theme } from "./src/infrastructure/theme";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC95F16t4ulRcR3MSJT5t6yjobisVOGXek",
-  authDomain: "cognyne.firebaseapp.com",
-  projectId: "cognyne",
-  storageBucket: "cognyne.appspot.com",
-  messagingSenderId: "271347541080",
-  appId: "1:271347541080:web:b9ec215b680a42bf36d62d",
-  measurementId: "G-B9FZSK0E7G",
+  apiKey: "AIzaSyCq1WV19NhmL1QOhkRGfSIodrOW8Xe-7bQ",
+  authDomain: "cognyne2.firebaseapp.com",
+  projectId: "cognyne2",
+  storageBucket: "cognyne2.appspot.com",
+  messagingSenderId: "427202957241",
+  appId: "1:427202957241:web:91e2779d01e616da33f068",
 };
 
 if (!firebase.apps.length) {
